@@ -7,6 +7,56 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <!--grid de séparation de la page en deux-->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
 
+        <!--stack panel de gauche-->
+        <StackPanel Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20">
+            <!--heure-->
+            <TextBlock FontSize="72" FontWeight="Bold" Foreground="Black">13:55</TextBlock>
+            <!--temperature actuelle-->
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <TextBlock FontSize="24" FontWeight="Bold" Foreground="Black">☀</TextBlock>
+                <TextBlock FontSize="36" FontWeight="Bold" Foreground="Black" Margin="10,0,0,0">13°C</TextBlock>
+            </StackPanel>
+            <!--le jour et la date-->
+            <TextBlock FontSize="48" FontWeight="Bold" Foreground="Black" Margin="0,20,0,0">MERCREDI</TextBlock>
+            <TextBlock FontSize="24" Foreground="Black">11 Septembre 2024</TextBlock>
+        </StackPanel>
+
+        <!--ligne de séparation centrale-->
+        <Rectangle Grid.Column="1" Width="1" Fill="Black" HorizontalAlignment="Left"/>
+
+        <!--stack panel de droite-->
+        <StackPanel Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,20,20,0" Width="200">
+            <!--affichage de la meteo a venir-->
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,10">
+                <TextBlock FontSize="24" Foreground="Black">14:00</TextBlock>
+                <TextBlock FontSize="24" Foreground="Black" Margin="20,0,0,0">🌩 12°C</TextBlock>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,10">
+                <TextBlock FontSize="24" Foreground="Black">15:00</TextBlock>
+                <TextBlock FontSize="24" Foreground="Black" Margin="20,0,0,0">🌧 11°C</TextBlock>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,10">
+                <TextBlock FontSize="24" Foreground="Black">16:00</TextBlock>
+                <TextBlock FontSize="24" Foreground="Black" Margin="20,0,0,0">🌥 18°C</TextBlock>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,10">
+                <TextBlock FontSize="24" Foreground="Black">17:00</TextBlock>
+                <TextBlock FontSize="24" Foreground="Black" Margin="20,0,0,0">☀ 20°C</TextBlock>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,10">
+                <TextBlock FontSize="24" Foreground="Black">18:00</TextBlock>
+                <TextBlock FontSize="24" Foreground="Black" Margin="20,0,0,0">☁ 16°C</TextBlock>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,10">
+                <TextBlock FontSize="24" Foreground="Black">19:00</TextBlock>
+                <TextBlock FontSize="24" Foreground="Black" Margin="20,0,0,0">☁ 14°C</TextBlock>
+            </StackPanel>
+        </StackPanel>
     </Grid>
 </Window>
