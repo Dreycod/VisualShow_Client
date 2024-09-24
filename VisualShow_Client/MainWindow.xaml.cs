@@ -18,7 +18,7 @@ namespace VisualShow_Client
     {
         public MainWindow()
         {
-            InitializeComponent();
+            
         }
     }
 }

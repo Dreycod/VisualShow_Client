@@ -5,58 +5,78 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VisualShow_Client"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800"
+        WindowState="Maximized">
+
+    <Window.Background>
+        <ImageBrush ImageSource="C:\Users\Long Mathéo-Alexis\Source\Repos\Dreycod\VisualShow_Client\VisualShow_Client\Ressources\placeholder.jpg"/>
+    </Window.Background>
+
+    <Window.Resources>
+        <Style x:Key="PartieGauche" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="DarkGray"/>
+        </Style>
+
+        <Style x:Key="PartieDroite" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="FontSize" Value="22"/>
+        </Style>
+    </Window.Resources>
+    
     <Grid>
-        <!--grid de séparation de la page en deux-->
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="533*" />
-            <ColumnDefinition Width="233*" />
-            <ColumnDefinition Width="33*"/>
-        </Grid.ColumnDefinitions>
+        <Viewbox>
+            <Grid>
+                <!--grid de séparation de la page en deux-->
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="550" />
+                    <ColumnDefinition Width="250" />
+                </Grid.ColumnDefinitions>
 
-        <!--stack panel de partie gauche-->
-        <StackPanel Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0">
-            <!--heure-->
-            <TextBlock Name="HA" FontSize="72" FontWeight="Bold" Foreground="Black" Margin="10,3,0,0" >Heure actuelle</TextBlock>
-            <!--temperature actuelle-->
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                <TextBlock Name="TempHA" FontSize="28" FontWeight="Bold" Foreground="Black" Margin="15,0,0,0">☀ 13°C</TextBlock>
-            </StackPanel>
-            <!--le jour et la date-->
-            <TextBlock Name="Jour" FontSize="46" FontWeight="Bold" Foreground="Black" Margin="10,80,0,0">Jour</TextBlock>
-            <TextBlock Name="Date" FontSize="24" Foreground="Black" Margin="10,10,0,0"> Date</TextBlock>
-        </StackPanel>
+                <!--stack panel de partie gauche-->
+                <StackPanel Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0">
+                    <!--heure-->
+                    <TextBlock Style="{StaticResource PartieGauche}" Name="HA" FontSize="72" FontWeight="Bold" Margin="10,3,0,0" >Heure actuelle</TextBlock>
+                    <!--temperature actuelle-->
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <TextBlock Style="{StaticResource PartieGauche}" Name="TempHA" FontSize="28" FontWeight="Bold" Margin="15,0,0,0">☀ 13°C</TextBlock>
+                    </StackPanel>
+                    <!--le jour et la date-->
+                    <TextBlock Style="{StaticResource PartieGauche}" Name="Jour" FontSize="46" FontWeight="Bold" Margin="10,80,0,0">Jour</TextBlock>
+                    <TextBlock Style="{StaticResource PartieGauche}" Name="Date" FontSize="24" Margin="10,10,0,0"> Date</TextBlock>
+                </StackPanel>
 
-        <!--ligne de séparation centrale-->
-        <Rectangle Width="1" Fill="Black" HorizontalAlignment="Left" Grid.ColumnSpan="2" Margin="533,0,0,0"/>
+                <!--ligne de séparation centrale-->
+                <Rectangle Width="1" Fill="Black" HorizontalAlignment="Left" Grid.ColumnSpan="2" Margin="550,0,0,0"/>
 
-        <!--stack panel de la partie de droite-->
-        <StackPanel Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,50,30,0" Width="200" Grid.ColumnSpan="2">
-            <!--affichage de la meteo a venir-->
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,10">
-                <TextBlock Name="HA1" FontSize="22" Foreground="Black"> +1 heure</TextBlock>
-                <TextBlock Name="TempHA1" FontSize="22" Foreground="Black" Margin="20,0,0,0">🌩 12°C</TextBlock>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,10">
-                <TextBlock Name="HA2" FontSize="22" Foreground="Black"> +2 heures</TextBlock>
-                <TextBlock Name="TempHA2" FontSize="22" Foreground="Black" Margin="20,0,0,0">🌧 11°C</TextBlock>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,10">
-                <TextBlock Name="HA3" FontSize="22" Foreground="Black"> +3 heures</TextBlock>
-                <TextBlock Name="TempHA3" FontSize="22" Foreground="Black" Margin="20,0,0,0">🌥 18°C</TextBlock>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,10">
-                <TextBlock Name="HA4" FontSize="22" Foreground="Black"> +4 heures</TextBlock>
-                <TextBlock Name="TempHA4" FontSize="22" Foreground="Black" Margin="20,0,0,0">☀ 20°C</TextBlock>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,10">
-                <TextBlock Name="HA5" FontSize="22" Foreground="Black"> +5 heures</TextBlock>
-                <TextBlock Name="TempHA5" FontSize="22" Foreground="Black" Margin="20,0,0,0">☁ 16°C</TextBlock>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,10">
-                <TextBlock Name="HA6" FontSize="22" Foreground="Black"> +6 heures</TextBlock>
-                <TextBlock Name="TempHA6" FontSize="22" Foreground="Black" Margin="20,0,0,0">☁ 14°C</TextBlock>
-            </StackPanel>
-        </StackPanel>
+                <!--stack panel de la partie de droite-->
+                <StackPanel Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,50,30,0" Width="200" Grid.ColumnSpan="2">
+                    <!--affichage de la meteo a venir-->
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,10">
+                        <TextBlock Style="{StaticResource PartieDroite}" Name="HA1"> +1 heure</TextBlock>
+                        <TextBlock Style="{StaticResource PartieDroite}" Name="TempHA1" Margin="20,0,0,0">🌩 12°C</TextBlock>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,10">
+                        <TextBlock Style="{StaticResource PartieDroite}" Name="HA2"> +2 heures</TextBlock>
+                        <TextBlock Style="{StaticResource PartieDroite}" Name="TempHA2" Margin="20,0,0,0">🌧 11°C</TextBlock>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,10">
+                        <TextBlock Style="{StaticResource PartieDroite}" Name="HA3"> +3 heures</TextBlock>
+                        <TextBlock Style="{StaticResource PartieDroite}" Name="TempHA3" Margin="20,0,0,0">🌥 18°C</TextBlock>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,10">
+                        <TextBlock Style="{StaticResource PartieDroite}" Name="HA4"> +4 heures</TextBlock>
+                        <TextBlock Style="{StaticResource PartieDroite}" Name="TempHA4" Margin="20,0,0,0">☀ 20°C</TextBlock>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,10">
+                        <TextBlock Style="{StaticResource PartieDroite}" Name="HA5"> +5 heures</TextBlock>
+                        <TextBlock Style="{StaticResource PartieDroite}" Name="TempHA5" Margin="20,0,0,0">☁ 16°C</TextBlock>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,10">
+                        <TextBlock Style="{StaticResource PartieDroite}" Name="HA6"> +6 heures</TextBlock>
+                        <TextBlock Style="{StaticResource PartieDroite}" Name="TempHA6" Margin="20,0,0,0">☁ 14°C</TextBlock>
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+        </Viewbox>
     </Grid>
 </Window>
