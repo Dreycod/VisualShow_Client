@@ -4,6 +4,6 @@
              xmlns:local="clr-namespace:VisualShow_Client"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary Source="Ressources/Style.xaml"/>
     </Application.Resources>
 </Application>

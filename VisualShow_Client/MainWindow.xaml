@@ -9,74 +9,135 @@
         WindowState="Maximized">
 
     <Window.Background>
-        <ImageBrush ImageSource="C:\Users\Long Mathéo-Alexis\Source\Repos\Dreycod\VisualShow_Client\VisualShow_Client\Ressources\placeholder.jpg"/>
+        <ImageBrush ImageSource="Ressources\placeholder.jpg"/>
     </Window.Background>
 
-    <Window.Resources>
-        <Style x:Key="PartieGauche" TargetType="TextBlock">
-            <Setter Property="Foreground" Value="DarkGray"/>
-        </Style>
 
-        <Style x:Key="PartieDroite" TargetType="TextBlock">
-            <Setter Property="Foreground" Value="Black"/>
-            <Setter Property="FontSize" Value="22"/>
-        </Style>
-    </Window.Resources>
-    
     <Grid>
-        <Viewbox>
-            <Grid>
-                <!--grid de séparation de la page en deux-->
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="550" />
-                    <ColumnDefinition Width="250" />
-                </Grid.ColumnDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
 
-                <!--stack panel de partie gauche-->
-                <StackPanel Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0">
-                    <!--heure-->
-                    <TextBlock Style="{StaticResource PartieGauche}" Name="HA" FontSize="72" FontWeight="Bold" Margin="10,3,0,0" >Heure actuelle</TextBlock>
-                    <!--temperature actuelle-->
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                        <TextBlock Style="{StaticResource PartieGauche}" Name="TempHA" FontSize="28" FontWeight="Bold" Margin="15,0,0,0">☀ 13°C</TextBlock>
-                    </StackPanel>
-                    <!--le jour et la date-->
-                    <TextBlock Style="{StaticResource PartieGauche}" Name="Jour" FontSize="46" FontWeight="Bold" Margin="10,80,0,0">Jour</TextBlock>
-                    <TextBlock Style="{StaticResource PartieGauche}" Name="Date" FontSize="24" Margin="10,10,0,0"> Date</TextBlock>
-                </StackPanel>
-
-                <!--ligne de séparation centrale-->
-                <Rectangle Width="1" Fill="Black" HorizontalAlignment="Left" Grid.ColumnSpan="2" Margin="550,0,0,0"/>
-
-                <!--stack panel de la partie de droite-->
-                <StackPanel Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,50,30,0" Width="200" Grid.ColumnSpan="2">
-                    <!--affichage de la meteo a venir-->
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,10">
-                        <TextBlock Style="{StaticResource PartieDroite}" Name="HA1"> +1 heure</TextBlock>
-                        <TextBlock Style="{StaticResource PartieDroite}" Name="TempHA1" Margin="20,0,0,0">🌩 12°C</TextBlock>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,10">
-                        <TextBlock Style="{StaticResource PartieDroite}" Name="HA2"> +2 heures</TextBlock>
-                        <TextBlock Style="{StaticResource PartieDroite}" Name="TempHA2" Margin="20,0,0,0">🌧 11°C</TextBlock>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,10">
-                        <TextBlock Style="{StaticResource PartieDroite}" Name="HA3"> +3 heures</TextBlock>
-                        <TextBlock Style="{StaticResource PartieDroite}" Name="TempHA3" Margin="20,0,0,0">🌥 18°C</TextBlock>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,10">
-                        <TextBlock Style="{StaticResource PartieDroite}" Name="HA4"> +4 heures</TextBlock>
-                        <TextBlock Style="{StaticResource PartieDroite}" Name="TempHA4" Margin="20,0,0,0">☀ 20°C</TextBlock>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,10">
-                        <TextBlock Style="{StaticResource PartieDroite}" Name="HA5"> +5 heures</TextBlock>
-                        <TextBlock Style="{StaticResource PartieDroite}" Name="TempHA5" Margin="20,0,0,0">☁ 16°C</TextBlock>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,10">
-                        <TextBlock Style="{StaticResource PartieDroite}" Name="HA6"> +6 heures</TextBlock>
-                        <TextBlock Style="{StaticResource PartieDroite}" Name="TempHA6" Margin="20,0,0,0">☁ 14°C</TextBlock>
-                    </StackPanel>
-                </StackPanel>
+        <Grid Grid.Column="0" >
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <TextBlock Name="Time_Today" Text="13:55" VerticalAlignment="Bottom" FontSize="50" Margin="20,20,0,0"/>
             </Grid>
-        </Viewbox>
+
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="3*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Image x:Name="Today_Image" Source="Ressources/placeholder.jpg" VerticalAlignment="Top" HorizontalAlignment="Right"/>
+                <TextBlock x:Name="Main_Temp" Text="13°C" VerticalAlignment="Top" FontSize="30" Grid.Column="1" HorizontalAlignment="Left"/>
+            </Grid>
+            
+            <Grid Grid.Row="2">
+                <TextBlock Text="Mecredi" FontSize="60" VerticalAlignment="Bottom" Margin="30,0,0,0"/>
+
+            </Grid>
+            
+            <Grid Grid.Row="3">
+                <TextBlock Text="11 Septembre 2024" FontSize="30" VerticalAlignment="Top" Margin="30,0,0,0"/>
+
+            </Grid>
+        </Grid>
+        
+        <Grid Grid.Column="1" Background="White" Opacity="0.5"/>
+        <Grid Grid.Column="1" Margin="30">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Grid x:Name="Details_1" Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>     
+                </Grid.ColumnDefinitions>
+                <TextBlock x:Name="Heure_1" Text="14:00" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Style="{StaticResource Display_Hours}" />
+                <Image x:Name="Image_1" Source="Ressources/placeholder.jpg" Grid.Column="1" />
+                <TextBlock x:Name="Temp_1" Text="12°C" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="2" Style="{StaticResource Display_Hours}" />
+
+            </Grid>
+
+            <Grid x:Name="Details_2" Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <TextBlock x:Name="Heure_2" Text="14:00" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Style="{StaticResource Display_Hours}" />
+                <Image x:Name="Image_2" Source="Ressources/placeholder.jpg" Grid.Column="1" />
+                <TextBlock x:Name="Temp_2" Text="12°C" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="2" Style="{StaticResource Display_Hours}" />
+
+            </Grid>
+
+            <Grid x:Name="Details_3" Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <TextBlock x:Name="Heure_3" Text="14:00" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Style="{StaticResource Display_Hours}" />
+                <Image x:Name="Image_3" Source="Ressources/placeholder.jpg" Grid.Column="1" />
+                <TextBlock x:Name="Temp_3" Text="12°C" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="2" Style="{StaticResource Display_Hours}" />
+
+            </Grid>
+
+            <Grid x:Name="Details_4" Grid.Row="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <TextBlock x:Name="Heure_4" Text="14:00" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Style="{StaticResource Display_Hours}" />
+                <Image x:Name="Image_4" Source="Ressources/placeholder.jpg" Grid.Column="1" />
+                <TextBlock x:Name="Temp_4" Text="12°C" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="2" Style="{StaticResource Display_Hours}" />
+
+            </Grid>
+
+            <Grid x:Name="Details_5" Grid.Row="4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <TextBlock x:Name="Heure_5" Text="14:00" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Style="{StaticResource Display_Hours}" />
+                <Image x:Name="Image_5" Source="Ressources/placeholder.jpg" Grid.Column="1" />
+                <TextBlock x:Name="Temp_5" Text="12°C" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="2" Style="{StaticResource Display_Hours}" />
+
+            </Grid>
+
+            <Grid x:Name="Details_6" Grid.Row="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <TextBlock x:Name="Heure_6" Text="14:00" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Style="{StaticResource Display_Hours}" />
+                <Image x:Name="Image_6" Source="Ressources/placeholder.jpg" Grid.Column="1" />
+                <TextBlock x:Name="Temp_6" Text="12°C" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="2" Style="{StaticResource Display_Hours}" />
+
+            </Grid>
+
+        </Grid>
+        
     </Grid>
 </Window>

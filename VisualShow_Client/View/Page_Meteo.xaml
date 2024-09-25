@@ -1,0 +1,52 @@
+﻿<Page x:Class="VisualShow_Client.View.Page_Meteo"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:VisualShow_Client.View"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Page_Meteo"
+      Background="White">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.3*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Background="LightGray" Opacity="0.5" Margin="20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Button Name="Meteo_Btn" Grid.Column="0" Content="Météo" Click="Menu_Click" Style="{StaticResource Selected_Menu_Button}"/>
+            <Border Name="Meteo_Border" Grid.Column="0" Style="{StaticResource Selected_Menu_Bar}"/>
+            <!-- 2 -->
+            <Button Name="Offres_Btn" Grid.Column="1" Content="Offres" Click="Menu_Click" Style="{StaticResource Menu_Button}"/>
+            <Border Name="Offres_Border" Grid.Column="1" Style="{StaticResource Menu_Bar}"/>
+            <!-- 3 -->
+            <Button Name="Agenda_Btn" Grid.Column="2" Content="Agenda" Click="Menu_Click" Style="{StaticResource Menu_Button}"/>
+            <Border Name="Agenda_Border" Grid.Column="2" Style="{StaticResource Menu_Bar}"/>
+            <!-- 4 -->
+            <Button Name="Date_Btn" Grid.Column="3" Content="Dates" Click="Menu_Click" Style="{StaticResource Menu_Button}"/>
+            <Border Name="Date_Border" Grid.Column="3" Style="{StaticResource Menu_Bar}"/>
+            <!-- 5 -->
+            <Button Name="Media_Btn" Grid.Column="4" Content="Media" Click="Menu_Click" Style="{StaticResource Menu_Button}"/>
+            <Border Name="Media_Border" Grid.Column="4" Style="{StaticResource Menu_Bar}"/>
+        </Grid>
+
+        <Grid Grid.Row="1" Margin="20,0,20,20" Name="Grid_Content">
+            <ListView>
+
+            </ListView>
+        </Grid>
+
+    </Grid>
+</Page>
