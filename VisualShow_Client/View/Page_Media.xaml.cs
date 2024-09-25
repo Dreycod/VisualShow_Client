@@ -18,11 +18,16 @@ namespace VisualShow_Client.View
     /// <summary>
     /// Logique d'interaction pour Page_Media.xaml
     /// </summary>
-    public partial class Page_Media : Page
+    public partial class Page_Media : UserControl
     {
         public Page_Media()
         {
             InitializeComponent();
+        }
+
+        private void Menu_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

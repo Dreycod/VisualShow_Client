@@ -18,11 +18,16 @@ namespace VisualShow_Client.View
     /// <summary>
     /// Logique d'interaction pour Page_Dates.xaml
     /// </summary>
-    public partial class Page_Dates : Page
+    public partial class Page_Dates : UserControl
     {
         public Page_Dates()
         {
             InitializeComponent();
+        }
+
+        private void Menu_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

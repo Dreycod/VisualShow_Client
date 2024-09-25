@@ -18,11 +18,16 @@ namespace VisualShow_Client.View
     /// <summary>
     /// Logique d'interaction pour Page_Offres.xaml
     /// </summary>
-    public partial class Page_Offres : Page
+    public partial class Page_Offres : UserControl
     {
         public Page_Offres()
         {
             InitializeComponent();
+        }
+
+        private void Menu_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

@@ -18,11 +18,16 @@ namespace VisualShow_Client.View
     /// <summary>
     /// Logique d'interaction pour Page_Meteo.xaml
     /// </summary>
-    public partial class Page_Meteo : Page
+    public partial class Page_Meteo : UserControl
     {
         public Page_Meteo()
         {
             InitializeComponent();
+        }
+
+        private void Menu_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

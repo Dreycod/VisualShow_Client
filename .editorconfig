@@ -1,0 +1,4 @@
+﻿[*.cs]
+
+# CA1707: Les identificateurs ne doivent pas contenir de traits de soulignement
+dotnet_diagnostic.CA1707.severity = none

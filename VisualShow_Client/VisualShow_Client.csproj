@@ -12,6 +12,13 @@
     <None Remove="Ressources\Font\Roboto-Light.ttf" />
     <None Remove="Ressources\Font\Roboto-Thin.ttf" />
     <None Remove="Ressources\Font\Roboto-ThinItalic.ttf" />
+    <None Remove="Ressources\placeholder.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Ressources\placeholder.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
@@ -25,9 +32,6 @@
 
   <ItemGroup>
     <None Update="Ressources\Font\Roboto-ThinItalic.ttf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Ressources\placeholder.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
