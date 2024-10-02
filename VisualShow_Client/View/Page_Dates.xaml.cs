@@ -33,7 +33,7 @@ namespace VisualShow_Client.View
             var events = dao_events.GetEvents();
             for (int i = 0; i < 2; i++)
             {
-                LV_Offres.Items.Add(new { name = events[0].name, date = "Event 1" });
+             //   LV_Offres.Items.Add(new { name = events[0].name, date = "Event 1" });
             }
         }
 
