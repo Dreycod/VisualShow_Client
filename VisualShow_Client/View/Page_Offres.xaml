@@ -42,7 +42,21 @@
         </Grid>
 
         <Grid Grid.Row="1" Margin="20,0,20,20" Name="Grid_Content">
-            <ListView>
+            <ListView x:Name="LV_Offres" Background="Transparent">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="0.2*"/>
+                                <ColumnDefinition Width="0.2*"/>
+                                <ColumnDefinition Width="0.8*"/>
+                                <ColumnDefinition Width="0.2*"/>
+                            </Grid.ColumnDefinitions>
+                            <Image Grid.Column="0" Source="{Binding name}" Height="80" Width="90"/>
+                            <Label Grid.Column="1" Content="{Binding date}" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
 
             </ListView>
         </Grid>

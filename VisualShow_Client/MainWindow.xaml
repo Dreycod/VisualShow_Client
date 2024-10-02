@@ -9,22 +9,22 @@
             <DoubleAnimation
                 Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
                 From="0"
-                To="-800"
-                Duration="0:0:1"
+                To="-1920"
+                Duration="0:0:0.6"
                 FillBehavior="Stop"/>
         </Storyboard>
 
         <Storyboard x:Key="PageSlideIn">
             <DoubleAnimation
                 Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
-                From="800"
+                From="1920"
                 To="0"
-                Duration="0:0:1"
+                Duration="0:0:0.6"
                 FillBehavior="Stop"/>
         </Storyboard>
     </Window.Resources>
 
     <Grid x:Name="GridContainer">
-        <!-- UserControl will be added here -->
+
     </Grid>
 </Window>

@@ -18,11 +18,12 @@ namespace VisualShow_Client.View
     /// <summary>
     /// Logique d'interaction pour Page_Accueil.xaml
     /// </summary>
-    public partial class Page_Accueil : UserControl
+    public class Page_Accueil : UserControl
     {
         public Page_Accueil()
         {
             InitializeComponent();
+            
         }
     }
 }

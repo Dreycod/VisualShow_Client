@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using VisualShow_Admin.Controller;
+using VisualShow_Admin.Model;
 
 namespace VisualShow_Client.View
 {
@@ -20,9 +22,19 @@ namespace VisualShow_Client.View
     /// </summary>
     public partial class Page_Dates : UserControl
     {
+        DAO_Events dao_events = new DAO_Events();
         public Page_Dates()
         {
             InitializeComponent();
+            UpdatePage_Date();
+        }
+        private async void UpdatePage_Date()
+        {            
+            var events = dao_events.GetEvents();
+            for (int i = 0; i < 2; i++)
+            {
+                LV_Offres.Items.Add(new { name = events[0].name, date = "Event 1" });
+            }
         }
 
         private void Menu_Click(object sender, RoutedEventArgs e)
