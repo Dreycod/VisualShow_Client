@@ -26,7 +26,7 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
-                <TextBlock Name="Time_Today" Text="13:55" VerticalAlignment="Bottom" FontSize="50" Margin="20,20,0,0"/>
+                <TextBlock Name="TB_CurrentTime" Text="13:55" VerticalAlignment="Bottom" FontSize="50" Margin="20,20,0,0"/>
             </Grid>
 
             <Grid Grid.Row="1">
@@ -39,7 +39,7 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
                 <Image x:Name="Today_Image" Source="..\Ressources/placeholder.jpg" VerticalAlignment="Top" HorizontalAlignment="Right"/>
-                <TextBlock x:Name="Main_Temp" Text="13°C" VerticalAlignment="Top" FontSize="30" Grid.Column="1" HorizontalAlignment="Left"/>
+                <TextBlock x:Name="TB_MainTemp" Text="13°C" VerticalAlignment="Top" FontSize="30" Grid.Column="1" HorizontalAlignment="Left"/>
             </Grid>
 
             <Grid Grid.Row="2">
@@ -48,7 +48,7 @@
             </Grid>
 
             <Grid Grid.Row="3">
-                <TextBlock Text="11 Septembre 2024" FontSize="30" VerticalAlignment="Top" Margin="30,0,0,0"/>
+                <TextBlock x:Name="TB_TodayDate" Text="11 Septembre 2024" FontSize="30" VerticalAlignment="Top" Margin="30,0,0,0"/>
 
             </Grid>
         </Grid>

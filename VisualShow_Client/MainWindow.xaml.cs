@@ -11,6 +11,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Xml.Linq;
+using VisualShow_Client.View;
 
 namespace VisualShow_Client
 {
@@ -19,24 +20,38 @@ namespace VisualShow_Client
     /// </summary>
     public partial class MainWindow : Window
     {
+        Page_Accueil page_accueil;
+        Page_Meteo page_meteo;
+        Page_Offres page_offres;
+        Page_Agenda page_agenda;
+        Page_Dates page_dates;
+        Page_Media page_media;
 
         public MainWindow()
         {
             InitializeComponent();
             int normalPage = 5500;
             int mainPage = 10000;
+
+            page_accueil = new Page_Accueil();
+            page_meteo = new Page_Meteo();
+            page_offres = new Page_Offres();
+            page_agenda = new Page_Agenda();
+            page_dates = new Page_Dates();
+            page_media = new Page_Media();
+            
         _: MethodAsync(normalPage, mainPage);
         }
         public async void MethodAsync(int normalPage, int mainPage)
         {
             while (true)
             {
-                await SwitchContent(new View.Page_Accueil(), mainPage);
-                await SwitchContent(new View.Page_Meteo(), normalPage);
-                await SwitchContent(new View.Page_Offres(), normalPage);
-                await SwitchContent(new View.Page_Agenda(), normalPage);
-                await SwitchContent(new View.Page_Dates(), normalPage);
-                await SwitchContent(new View.Page_Media(), normalPage);
+                await SwitchContent(page_accueil, mainPage);
+                await SwitchContent(page_meteo, normalPage);
+                await SwitchContent(page_offres, normalPage);
+                await SwitchContent(page_agenda, normalPage);
+                await SwitchContent(page_dates, normalPage);
+                await SwitchContent(page_media, normalPage);
             }
         }
 
