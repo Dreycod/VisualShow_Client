@@ -9,9 +9,9 @@
       Background="CadetBlue">
 
     <UserControl.Resources>
-        <ImageBrush x:Key="BackgroundImageBrush" ImageSource="..\Ressources\placeholder.jpg"/>
+        <ImageBrush x:Name="Background_Image" x:Key="BackgroundImageBrush" ImageSource="..\Ressources\placeholder.jpg"/>
     </UserControl.Resources>
-    
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -31,19 +31,20 @@
 
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="26*"/>
+                    <ColumnDefinition Width="107*"/>
+                    <ColumnDefinition Width="267*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <Image x:Name="Today_Image" Source="..\Ressources/placeholder.jpg" VerticalAlignment="Top" HorizontalAlignment="Right"/>
-                <TextBlock x:Name="TB_MainTemp" Text="13°C" VerticalAlignment="Top" FontSize="30" Grid.Column="1" HorizontalAlignment="Left"/>
+                <Image x:Name="Today_Image" Source="..\Ressources/placeholder.jpg" Height="30" Width="30" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="1"/>
+                <TextBlock x:Name="TB_MainTemp" Text="13°C" VerticalAlignment="Top" FontSize="30" Grid.Column="1" HorizontalAlignment="Right" Height="36" Width="62"/>
             </Grid>
 
             <Grid Grid.Row="2">
-                <TextBlock Text="Mecredi" FontSize="60" VerticalAlignment="Bottom" Margin="30,0,0,0"/>
+                <TextBlock x:Name="TB_TodayDay" Text="Mecredi" FontSize="60" VerticalAlignment="Bottom" Margin="30,0,0,0"/>
 
             </Grid>
 
@@ -119,7 +120,7 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <TextBlock x:Name="Heure_5" Text="14:00" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Style="{StaticResource Display_Hours}" />
-                <Image x:Name="Image_5" Source="..\Ressources/placeholder.jpg" Grid.Column="1" />
+                <Image x:Name="Image_5" Height="30" Source="..\Ressources/placeholder.jpg" Grid.Column="1" />
                 <TextBlock x:Name="Temp_5" Text="12°C" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="2" Style="{StaticResource Display_Hours}" />
 
             </Grid>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -32,9 +33,10 @@ namespace VisualShow_Client.View
         public Page_Accueil()
         {
             InitializeComponent();
+            apimanager = new APIManager();
+            
             UpdateUI("Annecy");
             timer = new DispatcherTimer();
-            apimanager = new APIManager();
             Initialize_Timer();
         }
         public void Initialize_Timer()
@@ -47,7 +49,11 @@ namespace VisualShow_Client.View
         {
             seconds++;
             Debug.WriteLine(seconds);
-            if (seconds >= 5)
+            if (seconds % 2 == 0)
+            {
+                TB_CurrentTime.Text = DateTime.Now.ToString("HH:mm");
+            }
+            if (seconds >= 60)
             {
                 seconds = 0;
                 UpdateUI("Annecy");
@@ -56,6 +62,11 @@ namespace VisualShow_Client.View
         }
         private async void UpdateUI(string cityUpdate)
         {
+
+            Image[] weatherImages = { Image_1, Image_2, Image_3, Image_4, Image_5, Image_6 };
+            TextBlock[] hourTexts = { Heure_1, Heure_2, Heure_3, Heure_4, Heure_5, Heure_6 };
+            TextBlock[] tempTexts = { Temp_1, Temp_2, Temp_3, Temp_4, Temp_5, Temp_6 };
+
             try
             {
                 Root root = await apimanager.DataGrabber(cityUpdate);
@@ -65,63 +76,49 @@ namespace VisualShow_Client.View
 
                 HourlyData TodayForecasT = root.fcst_day_1.hourly_data;
 
+                DateTime now = DateTime.Now;
 
                 Uri weatherNow = new Uri(currentcondition.icon, UriKind.Absolute);
 
-                TB_CurrentTime.Text = DateTime.Now.ToString("HH:mm");
+
+                TB_CurrentTime.Text = now.ToString("HH:mm");
                 TB_MainTemp.Text = currentcondition.tmp.ToString() + "°C";
+                Today_Image.Source = new BitmapImage(weatherNow);
+                TB_TodayDate.Text = now.ToString("dd MMMM yyyy");
 
-                string currentTimeString = "16:15";
-                DateTime currentTime = DateTime.ParseExact(currentTimeString, "HH:mm", CultureInfo.InvariantCulture);
+                string dayInFrench = now.ToString("dddd", new CultureInfo("fr-FR"));
+                string capitalizedDay = char.ToUpper(dayInFrench[0]) + dayInFrench.Substring(1);
 
-                // Get the hour part and calculate the next hour keys
-                int nextHour = currentTime.Hour + 1; // Get the next hour
-                string hourKey;
+                TB_TodayDay.Text = capitalizedDay;
+                
 
-                for (int i = 0; i < 3; i++) // Get the next three hours
+                for (int i = 0; i < 6; i++)
                 {
-                    // Calculate the next hour key
-                    hourKey = $"_{(nextHour + i).ToString("D2")}H00"; // Format as _XXH00
-                    Console.WriteLine($"Accessing data for: {hourKey}");
+                    string hourKey = now.AddHours(i+1).ToString("HH") + "H00";
 
-                    // Use reflection to access the hourly data dynamically
-                    var hourlyDataProperty = typeof(HourlyData).GetProperty(hourKey);
-                    if (hourlyDataProperty != null)
+                    PropertyInfo propInfo = typeof(HourlyData).GetProperty($"_{hourKey}");
+
+                    if (propInfo != null)
                     {
-                        var hourData = (dynamic)hourlyDataProperty.GetValue(TodayForecast.hourly_data);
-                        if (hourData != null)
+                        var hourlyData = propInfo.GetValue(TodayForecast.hourly_data);
+
+                        if (hourlyData != null)
                         {
-                            string icon = hourData.ICON; // Access the ICON property
-                            string temperature = hourData.Temperature; // Access the Temperature property
-                            Console.WriteLine($"The icon for {hourKey} is: {icon}, Temperature: {temperature}");
-                        }
-                        else
-                        {
-                            Console.WriteLine($"No data found for {hourKey}.");
+                            var iconProperty = hourlyData.GetType().GetProperty("ICON");
+                            var tmpProperty = hourlyData.GetType().GetProperty("TMP2m");
+
+                            if (iconProperty != null && tmpProperty != null)
+                            {
+                                string iconValue = (string)iconProperty.GetValue(hourlyData);
+                                string tmpValue = (string)tmpProperty.GetValue(hourlyData);
+
+                                hourTexts[i].Text = $"{hourKey.Substring(0, 2)}:00";
+                                tempTexts[i].Text = Math.Round(double.Parse(tmpValue)).ToString() + "°C";
+                                weatherImages[i].Source = new BitmapImage(new Uri(iconValue, UriKind.RelativeOrAbsolute));
+                            }
                         }
                     }
-                    else
-                    {
-                        Console.WriteLine($"Property {hourKey} does not exist.");
-                    }
-                }
-
-               // Uri weatherIn1H = new Uri(icon, UriKind.Absolute);
-
-             //   Today_Image.Source = new BitmapImage(weatherIn1H);
-
-                Heure_1.Text = apimanager.GetForecastForHour(1) + "00";
-               // Image_1.Source = new BitmapImage(weatherIn1H);
-
-                Heure_2.Text = apimanager.GetForecastForHour(2).ToString() + ":00";
-                Heure_3.Text = apimanager.GetForecastForHour(3).ToString() + ":00";
-                Heure_4.Text = apimanager.GetForecastForHour(4).ToString() + ":00";
-                Heure_5.Text = apimanager.GetForecastForHour(5).ToString() + ":00";
-                Heure_6.Text = apimanager.GetForecastForHour(6).ToString() + ":00";
-
-                TB_TodayDate.Text = currentcondition.date.ToString();
-                MessageBox.Show(currentcondition.date.ToString());
-              
+                }              
             }
             catch (Exception ex)
             {            }

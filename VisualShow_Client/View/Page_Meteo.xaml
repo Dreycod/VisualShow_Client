@@ -42,9 +42,8 @@
         </Grid>
 
         <Grid Grid.Row="1" Margin="20,0,20,20" Name="Grid_Content">
-            <ListView>
-
-            </ListView>
+                
+             
         </Grid>
 
     </Grid>
