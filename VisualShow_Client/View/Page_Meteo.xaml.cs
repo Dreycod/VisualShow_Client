@@ -68,6 +68,7 @@ namespace VisualShow_Client.View
         public void UpdateUI()
         {
            List<string> mqttData = dao_mqtt.GetData();
+            MessageBox.Show(mqttData.ToString());
            if (mqttData.Count == 0)
            {
                 return;

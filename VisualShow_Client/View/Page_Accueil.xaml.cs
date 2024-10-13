@@ -90,11 +90,26 @@ namespace VisualShow_Client.View
                 string capitalizedDay = char.ToUpper(dayInFrench[0]) + dayInFrench.Substring(1);
 
                 TB_TodayDay.Text = capitalizedDay;
-                
 
                 for (int i = 0; i < 6; i++)
                 {
-                    string hourKey = now.AddHours(i+1).ToString("HH") + "H00";
+                    string hourKey;
+
+                    if (now.AddHours(i + 1).Hour < 10)
+                    {
+                        if (now.AddHours(i + 1).Hour == 0)
+                        {
+                            hourKey = "0H00";
+                        }
+                        else
+                        {
+                            hourKey = now.AddHours(i + 1).ToString("H") + "H00";
+                        }
+                    }
+                    else
+                    {
+                        hourKey = now.AddHours(i+1).ToString("HH") + "H00";
+                    }
 
                     PropertyInfo propInfo = typeof(HourlyData).GetProperty($"_{hourKey}");
 
