@@ -42,8 +42,23 @@
         </Grid>
 
         <Grid Grid.Row="1" Margin="20,0,20,20" Name="Grid_Content">
-                
-             
+            <Grid.RowDefinitions>
+                <RowDefinition Height="33*"/>
+                <RowDefinition Height="38*"/>
+                <RowDefinition Height="36*"/>
+                <RowDefinition Height="36*"/>
+                <RowDefinition Height="183*"/>
+            </Grid.RowDefinitions>
+            <TextBlock x:Name="TB_Humidity" Text="a" Grid.Row="0"/>
+            <TextBlock x:Name="TB_Temperature" Text="b" Grid.Row="1"/>
+            <TextBlock x:Name="TB_Decibels" Text="c" Grid.Row="2"/>
+            <TextBlock x:Name="TB_AirQuality" Text="d" Grid.Row="3"/>
+            <Popup x:Name="Popup_Emergency" IsOpen="False" Placement="Center" Grid.Row="4">
+                <Border Background="Red" Width="200" Height="200">
+                    <TextBlock x:Name="TB_Emergency" Text="Emergency" Foreground="White" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Border>
+            </Popup>
+
         </Grid>
 
     </Grid>

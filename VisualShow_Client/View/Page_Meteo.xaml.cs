@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,11 +13,14 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using MQTTnet;
 using MQTTnet.Client;
 using MQTTnet.Packets;
 using MQTTnet.Protocol;
 using MQTTnet.Server;
+using VisualShow_Client.Controller;
+using WeatherView.Service;
 
 namespace VisualShow_Client.View
 {
@@ -25,79 +29,61 @@ namespace VisualShow_Client.View
     /// </summary>
     public partial class Page_Meteo : UserControl
     {
+       
+
+        //variables dans lesquelles ont stocker les valeurs obtenues avec mqtt
+        
+
+        int seconds;
+
+        DispatcherTimer timer;
+        DAO_MQTT dao_mqtt;
         public Page_Meteo()
         {
             InitializeComponent();
+            dao_mqtt = new DAO_MQTT();
+            timer = new DispatcherTimer();
+            UpdateUI();
+            Initialize_Timer();
         }
-        private const string BrokerAddress = "172.31.254.100";
-        private const int BrokerPort = 1883;
-        private const string Username = "matheo";
-        private const string Password = "matheo";
-        private string ClientID = Guid.NewGuid().ToString();
-        private IMqttClient _client;
-        private async void ConnectToBrokerAsync()
+        public void Initialize_Timer()
         {
-            var factory = new MqttFactory();
-            _client = factory.CreateMqttClient();
-            var optionsBuilder = new MqttClientOptionsBuilder()
-                .WithClientId(ClientID)
-                .WithTcpServer(BrokerAddress, BrokerPort)
-                .WithCredentials(Username, Password)
-                .WithCleanSession();
-            var options = optionsBuilder.Build();
-
-            try
-            {
-                await _client.ConnectAsync(options);
-                MessageBox.Show("Connecté au broker");
-
-                var topicFilters = new List<MqttTopicFilter>();
-
-                List<string> topics = new List<string>()
-                {
-                "topic1",
-                "topic2",
-                "topic3"
-                };
-
-                foreach (var topic in topics)
-                {
-                    var filter = new MqttTopicFilterBuilder().WithTopic(topic).Build();
-                    topicFilters.Add(filter);
-                }
-
-                var subscriptionOptions = new MqttClientSubscribeOptions()
-                {
-                    TopicFilters = topicFilters
-                };
-
-                await _client.SubscribeAsync(subscriptionOptions);
-                MessageBox.Show("connected to topic");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Échec de connexion : {ex.Message}");
-            }
-            factory.ApplicationMessageReceivedHandler = new MqttApplicationMessageReceivedHandlerDelegate(e => MqttOnNewMessage(e));
-            factory.ConnectedHandler = new MqttClientConnectedHandlerDelegate(e => MqttOnConnected(e));
-            factory.DisconnectedHandler = new MqttClientDisconnectedHandlerDelegate(e => MqttOnDisconnected(e));
-
-            await factory.SubscribeAsync(new MqttTopicFilterBuilder().WithTopic(topic).WithExactlyOnceQoS().Build());
-            await factory.StartAsync(mqttClientOptions);
-
+            timer.Tick += new EventHandler(Timer_Tick);
+            timer.Interval = new TimeSpan(0, 0, 1);
+            timer.Start();
         }
-
-        private static void MqttOnNewMessage(MqttApplicationMessageReceivedEventArgs e)
+        public void Timer_Tick(object sender, EventArgs e)
         {
-            // Do something with each incoming message from the topic
+            seconds++;
+            Debug.WriteLine(seconds);
+            if (seconds == 30)
+            {
+                seconds = 0;
+                UpdateUI();
+                Debug.WriteLine("Updating MQTT data");
 
-            Console.WriteLine($"MQTT Client: OnNewMessage Topic: {e.ApplicationMessage.Topic} / Message: {e.ApplicationMessage.Payload}");
+            }
         }
 
-        private static void MqttOnConnected(MqttClientConnectedEventArgs e) => Console.WriteLine($"MQTT Client: Connected with result: {e.ConnectResult.ResultCode}");
-
-        private static void MqttOnDisconnected(MqttClientDisconnectedEventArgs e) => Console.WriteLine($"MQTT Client: Broker connection lost with reason: {e.Reason}.");
-
+        public void UpdateUI()
+        {
+           List<string> mqttData = dao_mqtt.GetData();
+           if (mqttData.Count == 0)
+           {
+                return;
+           }
+            TB_Humidity.Text = mqttData[0];
+            TB_Temperature.Text = mqttData[1];
+            TB_Decibels.Text = mqttData[2];
+            TB_AirQuality.Text = mqttData[3];
+            if (mqttData[4] != "")
+            {
+                Popup_Emergency.IsOpen = true;
+                TB_Emergency.Text = mqttData[4];
+            }
+           
+        }
+        public void Menu_Click(object sender, RoutedEventArgs e) { }
     }
 }
 
