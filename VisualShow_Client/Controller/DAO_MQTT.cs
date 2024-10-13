@@ -121,20 +121,27 @@ namespace VisualShow_Client.Controller
         
         public List<string> GetData()
         {
+            // ceci est un test qui marche, faut etre connecté pour réellement avoir des vrais valeurs de mqtt
+            //MqttData.Add(humidity);
+            //MqttData.Add(temperature);
+            //MqttData.Add(decibels);
+            //MqttData.Add(air_quality);
+            //MqttData.Add(emergency);
+
             return MqttData;
         }
         public DAO_MQTT()
         {
-            ConnexionBroker();
-            try
-            {
-                //fonction qui appelle la fonction GestionMessage a chaque fois qu'un message est reçu
-                clientmqtt.ApplicationMessageReceivedAsync += GestionMessage;
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("Erreur lors de la réception des messages");
-            }
+            //ConnexionBroker();
+            //try
+            //{
+            //    //fonction qui appelle la fonction GestionMessage a chaque fois qu'un message est reçu
+            //    clientmqtt.ApplicationMessageReceivedAsync += GestionMessage;
+            //}
+            //catch (Exception)
+            //{
+            //    MessageBox.Show("Erreur lors de la réception des messages");
+            //}
         }
     }
 }

@@ -56,7 +56,7 @@ namespace VisualShow_Client.View
         {
             seconds++;
             Debug.WriteLine(seconds);
-            if (seconds == 30)
+            if (seconds == 10)
             {
                 seconds = 0;
                 UpdateUI();
@@ -68,9 +68,10 @@ namespace VisualShow_Client.View
         public void UpdateUI()
         {
            List<string> mqttData = dao_mqtt.GetData();
-            MessageBox.Show(mqttData.ToString());
+            MessageBox.Show(mqttData[1]);
            if (mqttData.Count == 0)
            {
+                MessageBox.Show("nil");
                 return;
            }
             TB_Humidity.Text = mqttData[0];
@@ -82,7 +83,8 @@ namespace VisualShow_Client.View
                 Popup_Emergency.IsOpen = true;
                 TB_Emergency.Text = mqttData[4];
             }
-           
+
+            MessageBox.Show("worked");
         }
         public void Menu_Click(object sender, RoutedEventArgs e) { }
     }
