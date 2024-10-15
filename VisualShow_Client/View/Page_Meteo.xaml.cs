@@ -43,8 +43,8 @@ namespace VisualShow_Client.View
             InitializeComponent();
             dao_mqtt = new DAO_MQTT();
             timer = new DispatcherTimer();
-            UpdateUI();
-            Initialize_Timer();
+       //     UpdateUI();
+       //     Initialize_Timer();
         }
         public void Initialize_Timer()
         {
