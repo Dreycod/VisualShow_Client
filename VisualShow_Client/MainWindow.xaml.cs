@@ -30,12 +30,12 @@ namespace VisualShow_Client
         Page_Media page_media;
         DAO_Ecrans dao_ecrans;
 
+        int mainPage = 5000; // 30000
+        int normalPage = 1; // 20000
+
         public MainWindow()
         {
             InitializeComponent();
-            int normalPage = 5000; // 20000
-            int mainPage = 1; // 30000
-
             page_accueil = new Page_Accueil();
             page_meteo = new Page_Meteo();
             page_offres = new Page_Offres();
@@ -43,22 +43,6 @@ namespace VisualShow_Client
             page_dates = new Page_Dates();
             page_media = new Page_Media();
             dao_ecrans = new DAO_Ecrans();
-        }
-        
-        public void UpdateComboBox()
-        { 
-            // Assuming ecrans is a list of objects that have a 'Name' property
-            var ecrans = dao_ecrans.GetEcrans();
-
-            if (ecrans != null)
-            {
-                
-                // Create a new list to hold the names of the ecrans
-                List<string> ecranNames = new List<string>();
-
-                ecranNames.Add(ecran.Name); // Assuming 'Name' is the property you want
-            }
-          
         }
 
         public async void MethodAsync(int normalPage, int mainPage)
@@ -108,9 +92,6 @@ namespace VisualShow_Client
 
         private void Menu_Click(object sender, RoutedEventArgs e)
         {
-            int normalPage = 5500;
-            int mainPage = 10000;
-            _: MethodAsync(normalPage, mainPage);
         }
 
         private void Ecran_ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)

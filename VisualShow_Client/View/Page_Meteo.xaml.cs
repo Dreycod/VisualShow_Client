@@ -23,6 +23,8 @@ namespace VisualShow_Client.View
 
         DispatcherTimer timer;
         DAO_MQTT dao_mqtt;
+        private bool isPopupCooldownActive;
+
         public Page_Meteo()
         {
             InitializeComponent();
