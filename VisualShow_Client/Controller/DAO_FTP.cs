@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Numerics;
 using System.Threading.Tasks;
+using static System.Net.WebRequestMethods;
 
 public class DAO_FTP
 {
-    string ftpServer;
+    string ftpServer = "https://ftp-drey.alwaysdata.net/getEtages";
     string username;
     string password;
 

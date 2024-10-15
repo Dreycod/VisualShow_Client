@@ -35,10 +35,14 @@
             <Border Name="Media_Border" Grid.Column="4" Style="{StaticResource Selected_Menu_Bar}"/>
         </Grid>
 
-        <Grid Grid.Row="1" Margin="20,0,20,20" Name="Grid_Content">
-            <ListView>
-
-            </ListView>
+        <Grid>
+                <ListView x:Name="ImageListView">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Image Source="{Binding}" Width="200" Height="200" Margin="5"/>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
         </Grid>
 
     </Grid>
