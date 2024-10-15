@@ -48,11 +48,14 @@ namespace VisualShow_Client
             // Assuming ecrans is a list of objects that have a 'Name' property
             var ecrans = dao_ecrans.GetEcrans();
 
-            
-            // Create a new list to hold the names of the ecrans
-            List<string> ecranNames = new List<string>();
+            if (ecrans != null)
+            {
+                
+                // Create a new list to hold the names of the ecrans
+                List<string> ecranNames = new List<string>();
 
                 ecranNames.Add(ecran.Name); // Assuming 'Name' is the property you want
+            }
           
         }
 
