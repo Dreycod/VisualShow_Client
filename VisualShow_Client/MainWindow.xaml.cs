@@ -30,8 +30,8 @@ namespace VisualShow_Client
         public MainWindow()
         {
             InitializeComponent();
-            int normalPage = 5500;
-            int mainPage = 10000;
+            int normalPage = 5000; // 20000
+            int mainPage = 1; // 30000
 
             page_accueil = new Page_Accueil();
             page_meteo = new Page_Meteo();

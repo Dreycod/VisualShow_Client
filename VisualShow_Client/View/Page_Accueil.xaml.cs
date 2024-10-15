@@ -78,7 +78,7 @@ namespace VisualShow_Client.View
 
                 DateTime now = DateTime.Now;
 
-                Uri weatherNow = new Uri(currentcondition.icon, UriKind.Absolute);
+                Uri weatherNow = new Uri(currentcondition.icon_big, UriKind.Absolute);
 
 
                 TB_CurrentTime.Text = now.ToString("HH:mm");
@@ -94,46 +94,48 @@ namespace VisualShow_Client.View
                 for (int i = 0; i < 6; i++)
                 {
                     string hourKey;
+                    string displayTime;
 
-                    if (now.AddHours(i + 1).Hour < 10)
-                    {
-                        if (now.AddHours(i + 1).Hour == 0)
-                        {
-                            hourKey = "0H00";
-                        }
-                        else
-                        {
-                            hourKey = now.AddHours(i + 1).ToString("H") + "H00";
-                        }
-                    }
-                    else
-                    {
-                        hourKey = now.AddHours(i+1).ToString("HH") + "H00";
-                    }
+                    // Get the hour for the current time + i hours
+                    int currentHour = now.AddHours(i + 1).Hour;
 
+                    // Construct the hourKey for property access (XH00 or XXH00)
+                    hourKey = $"{currentHour}H00"; // No need for leading zero logic since format is consistent
+
+                    // Construct display time (H:00 for single digits, HH:00 for double digits)
+                    displayTime = $"{currentHour}:00"; // This works for both single and double digits
+
+                    // Try to get the property from the HourlyData class using the hourKey
                     PropertyInfo propInfo = typeof(HourlyData).GetProperty($"_{hourKey}");
 
                     if (propInfo != null)
                     {
+                        // Get the hourly data for the current hour
                         var hourlyData = propInfo.GetValue(TodayForecast.hourly_data);
 
                         if (hourlyData != null)
                         {
+                            // Retrieve the ICON and TMP2m properties
                             var iconProperty = hourlyData.GetType().GetProperty("ICON");
                             var tmpProperty = hourlyData.GetType().GetProperty("TMP2m");
 
                             if (iconProperty != null && tmpProperty != null)
                             {
+                                // Get the icon and temperature values
                                 string iconValue = (string)iconProperty.GetValue(hourlyData);
                                 string tmpValue = (string)tmpProperty.GetValue(hourlyData);
 
-                                hourTexts[i].Text = $"{hourKey.Substring(0, 2)}:00";
+                                // Modify the iconValue to get the big version
+                                string bigIconValue = iconValue.Replace(".png", "-big.png");
+
+                                // Set the text for the display
+                                hourTexts[i].Text = displayTime; // Use the displayTime format
                                 tempTexts[i].Text = Math.Round(double.Parse(tmpValue)).ToString() + "°C";
-                                weatherImages[i].Source = new BitmapImage(new Uri(iconValue, UriKind.RelativeOrAbsolute));
+                                weatherImages[i].Source = new BitmapImage(new Uri(bigIconValue, UriKind.RelativeOrAbsolute));
                             }
                         }
                     }
-                }              
+                }
             }
             catch (Exception ex)
             {            }

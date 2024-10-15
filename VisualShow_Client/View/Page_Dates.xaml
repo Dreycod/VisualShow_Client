@@ -8,6 +8,10 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Background="White">
 
+    <UserControl.Resources>
+        <DropShadowEffect x:Key="ShadowEffect" BlurRadius="3" ShadowDepth="1" Color="#FF000000"/>
+    </UserControl.Resources>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="0.3*"/>
@@ -16,51 +20,48 @@
 
         <Grid Grid.Row="0" Background="LightGray" Opacity="0.5" Margin="20">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
             <Button Name="Meteo_Btn" Grid.Column="0" Content="Météo" Click="Menu_Click" Style="{StaticResource Menu_Button}"/>
             <Border Name="Meteo_Border" Grid.Column="0" Style="{StaticResource Menu_Bar}"/>
-            <!-- 2 -->
             <Button Name="Offres_Btn" Grid.Column="1" Content="Offres" Click="Menu_Click" Style="{StaticResource Menu_Button}"/>
             <Border Name="Offres_Border" Grid.Column="1" Style="{StaticResource Menu_Bar}"/>
-            <!-- 3 -->
             <Button Name="Agenda_Btn" Grid.Column="2" Content="Agenda" Click="Menu_Click" Style="{StaticResource Menu_Button}"/>
             <Border Name="Agenda_Border" Grid.Column="2" Style="{StaticResource Menu_Bar}"/>
-            <!-- 4 -->
             <Button Name="Date_Btn" Grid.Column="3" Content="Dates" Click="Menu_Click" Style="{StaticResource Selected_Menu_Button}"/>
             <Border Name="Date_Border" Grid.Column="3" Style="{StaticResource Selected_Menu_Bar}"/>
-            <!-- 5 -->
             <Button Name="Media_Btn" Grid.Column="4" Content="Media" Click="Menu_Click" Style="{StaticResource Menu_Button}"/>
             <Border Name="Media_Border" Grid.Column="4" Style="{StaticResource Menu_Bar}"/>
         </Grid>
 
         <Grid Grid.Row="1" Margin="20,0,20,20" Name="Grid_Content">
-            <ListView x:Name="LV_Offres" Background="Transparent">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="0.2*"/>
-                                <ColumnDefinition Width="0.2*"/>
-                                <ColumnDefinition Width="0.8*"/>
-                                <ColumnDefinition Width="0.2*"/>
-                            </Grid.ColumnDefinitions>
-                            <Image Grid.Column="0" Source="{Binding name}" Height="80" Width="90"/>
-                            <Label Grid.Column="1" Content="{Binding date}" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-                        </Grid>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-
-            </ListView>
+            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                <ListBox x:Name="LB_Agenda" Background="Transparent" BorderBrush="Transparent">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel />
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Border BorderBrush="White" BorderThickness="1" CornerRadius="8" Margin="5" 
+                            Effect="{StaticResource ShadowEffect}" Background="Transparent">
+                                <StackPanel>
+                                    <Label Content="{Binding name}" FontSize="16" FontWeight="Bold" HorizontalAlignment="Stretch" Margin="0,5,0,0" />
+                                    <Label Content="{Binding date}" FontSize="14" HorizontalAlignment="Stretch" Margin="0,5,0,0" />
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </ScrollViewer>
         </Grid>
+
 
     </Grid>
 </UserControl>
-

@@ -33,7 +33,7 @@ namespace VisualShow_Client.View
         public async void LoadEvents()
         {
             var events = await dao_events.GetEvents();
-            LV_Offres.ItemsSource = events;
+            IC_Offres.ItemsSource = events;
         }
         private void Menu_Click(object sender, RoutedEventArgs e)
         {

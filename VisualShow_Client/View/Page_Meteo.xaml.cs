@@ -1,24 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Windows.Threading;
-using MQTTnet;
-using MQTTnet.Client;
-using MQTTnet.Packets;
-using MQTTnet.Protocol;
-using MQTTnet.Server;
 using VisualShow_Client.Controller;
 using WeatherView.Service;
 
@@ -29,64 +14,108 @@ namespace VisualShow_Client.View
     /// </summary>
     public partial class Page_Meteo : UserControl
     {
-       
+        // Variables to store values received from MQTT
+        private int seconds;
+        private bool isPopupCooldownActive;
+        private DispatcherTimer timer;
+        private DAO_MQTT dao_mqtt;
 
-        //variables dans lesquelles ont stocker les valeurs obtenues avec mqtt
-        
-
-        int seconds;
-
-        DispatcherTimer timer;
-        DAO_MQTT dao_mqtt;
         public Page_Meteo()
         {
             InitializeComponent();
             dao_mqtt = new DAO_MQTT();
-            timer = new DispatcherTimer();
-            UpdateUI();
             Initialize_Timer();
+            UpdateUI();
         }
+
         public void Initialize_Timer()
         {
-            timer.Tick += new EventHandler(Timer_Tick);
-            timer.Interval = new TimeSpan(0, 0, 1);
+            timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromSeconds(30);
+            timer.Tick += Timer_Tick;
             timer.Start();
         }
+
         public void Timer_Tick(object sender, EventArgs e)
         {
-            seconds++;
+            seconds += 30;
             Debug.WriteLine(seconds);
-            if (seconds == 10)
-            {
-                seconds = 0;
-                UpdateUI();
-                Debug.WriteLine("Updating MQTT data");
-
-            }
+            UpdateUI();
+            Debug.WriteLine("Checking air quality...");
         }
 
         public void UpdateUI()
         {
-           List<string> mqttData = dao_mqtt.GetData();
-            MessageBox.Show(mqttData[1]);
-           if (mqttData.Count == 0)
-           {
-                MessageBox.Show("nil");
-                return;
-           }
-            TB_Humidity.Text = mqttData[0];
-            TB_Temperature.Text = mqttData[1];
-            TB_Decibels.Text = mqttData[2];
-            TB_AirQuality.Text = mqttData[3];
-            if (mqttData[4] != "")
+            List<string> mqttData = dao_mqtt.GetData();
+            if (mqttData.Count == 0)
             {
-                Popup_Emergency.IsOpen = true;
-                TB_Emergency.Text = mqttData[4];
+                MessageBox.Show("No data received.");
+                return;
             }
 
-            MessageBox.Show("worked");
+            TB_HumidityValue.Text = mqttData[0] + "%";
+            TB_TemperatureValue.Text = mqttData[1] + "°C";
+            TB_DecibelsValue.Text = mqttData[2] + " dB";
+
+            string airQualityValueStr = mqttData[3];
+            TB_AirQualityValue.Text = airQualityValueStr + JudgeAirQuality(airQualityValueStr);
+
+            CheckAirQuality(airQualityValueStr);
         }
+
+        private void CheckAirQuality(string airQuality)
+        {
+            int airQualityValue = int.Parse(airQuality);
+
+            if (airQualityValue > 45 && !isPopupCooldownActive)
+            {
+                ShowWarningPopup("Faite attention, la qualité d'air est basse et c'est fortement recommendé de ouvrir les fenêtres");
+                isPopupCooldownActive = true;
+            }
+        }
+
+        private void ShowWarningPopup(string message)
+        {
+            TB_Emergency.Text = message;
+
+            Popup_Emergency.PlacementTarget = Application.Current.MainWindow;
+            Popup_Emergency.IsOpen = true;
+
+            DispatcherTimer durationTimer = new DispatcherTimer();
+            durationTimer.Interval = TimeSpan.FromSeconds(10);
+            durationTimer.Tick += (s, e) =>
+            {
+                Popup_Emergency.IsOpen = false;
+                durationTimer.Stop();
+
+                DispatcherTimer cooldownTimer = new DispatcherTimer();
+                cooldownTimer.Interval = TimeSpan.FromSeconds(30);
+                cooldownTimer.Tick += (s2, e2) =>
+                {
+                    isPopupCooldownActive = false;
+                    cooldownTimer.Stop();
+                };
+                cooldownTimer.Start();
+            };
+            durationTimer.Start();
+        }
+
+        public string JudgeAirQuality(string airQuality)
+        {
+            double airQualityValue = double.Parse(airQuality);
+
+            if (airQualityValue <= 12) // Very Good
+                return " (Very Good)";
+            else if (airQualityValue <= 25) // Good
+                return " (Good)";
+            else if (airQualityValue <= 50) // Moderate
+                return " (Moderate)";
+            else if (airQualityValue <= 75) // Bad
+                return " (Bad)";
+            else // Very Bad
+                return " (Very Bad)";
+        }
+
         public void Menu_Click(object sender, RoutedEventArgs e) { }
     }
 }
-

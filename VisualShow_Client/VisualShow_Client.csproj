@@ -12,10 +12,26 @@
     <None Remove="Ressources\Font\Roboto-Light.ttf" />
     <None Remove="Ressources\Font\Roboto-Thin.ttf" />
     <None Remove="Ressources\Font\Roboto-ThinItalic.ttf" />
+    <None Remove="Ressources\Images\AirQualityIcon.png" />
+    <None Remove="Ressources\Images\DecibelsIcon.png" />
+    <None Remove="Ressources\Images\HumidityIcon.png" />
+    <None Remove="Ressources\Images\TemperatureIcon.png" />
     <None Remove="Ressources\placeholder.jpg" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Ressources\Images\AirQualityIcon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Ressources\Images\DecibelsIcon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Ressources\Images\HumidityIcon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Ressources\Images\TemperatureIcon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Ressources\placeholder.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
