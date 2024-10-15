@@ -11,6 +11,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Xml.Linq;
+using VisualShow_Admin.Controller;
+using VisualShow_Admin.Model;
 using VisualShow_Client.View;
 
 namespace VisualShow_Client
@@ -26,6 +28,7 @@ namespace VisualShow_Client
         Page_Agenda page_agenda;
         Page_Dates page_dates;
         Page_Media page_media;
+        DAO_Ecrans dao_ecrans;
 
         public MainWindow()
         {
@@ -39,9 +42,25 @@ namespace VisualShow_Client
             page_agenda = new Page_Agenda();
             page_dates = new Page_Dates();
             page_media = new Page_Media();
-            
-        _: MethodAsync(normalPage, mainPage);
+            dao_ecrans = new DAO_Ecrans();
         }
+        
+        public void UpdateComboBox()
+        { 
+            // Assuming ecrans is a list of objects that have a 'Name' property
+            var ecrans = dao_ecrans.GetEcrans();
+
+            if (ecrans != null)
+            {
+                
+                // Create a new list to hold the names of the ecrans
+                List<string> ecranNames = new List<string>();
+
+                ecranNames.Add(ecran.Name); // Assuming 'Name' is the property you want
+            }
+          
+        }
+
         public async void MethodAsync(int normalPage, int mainPage)
         {
             while (true)
@@ -85,6 +104,19 @@ namespace VisualShow_Client
             }
 
             await Task.Delay(delay);
+        }
+
+        private void Menu_Click(object sender, RoutedEventArgs e)
+        {
+            int normalPage = 5500;
+            int mainPage = 10000;
+            _: MethodAsync(normalPage, mainPage);
+        }
+
+        private void Ecran_ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var selectedItem = (Ecrans)Ecran_ComboBox.SelectedItem;
+            MessageBox.Show($"Selected: {selectedItem.name}");
         }
     }
 }

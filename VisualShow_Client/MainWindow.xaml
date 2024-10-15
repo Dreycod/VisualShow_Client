@@ -24,7 +24,15 @@
         </Storyboard>
     </Window.Resources>
 
-    <Grid x:Name="GridContainer">
-
+    <Grid x:Name="GridContainer" Background="#FF272727">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <TextBlock Text="Choissisez l'écran de votre salle" Grid.Row="0" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
+        <ComboBox Grid.Row="1" Name="Ecran_ComboBox" Background="#FF202020" SelectionChanged="Ecran_ComboBox_SelectionChanged" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200" Height="60" />
     </Grid>
 </Window>

@@ -14,18 +14,22 @@ namespace VisualShow_Client.View
     /// </summary>
     public partial class Page_Meteo : UserControl
     {
-        // Variables to store values received from MQTT
-        private int seconds;
-        private bool isPopupCooldownActive;
-        private DispatcherTimer timer;
-        private DAO_MQTT dao_mqtt;
+       
 
+        //variables dans lesquelles ont stocker les valeurs obtenues avec mqtt
+        
+
+        int seconds;
+
+        DispatcherTimer timer;
+        DAO_MQTT dao_mqtt;
         public Page_Meteo()
         {
             InitializeComponent();
             dao_mqtt = new DAO_MQTT();
-            Initialize_Timer();
+            timer = new DispatcherTimer();
             UpdateUI();
+            Initialize_Timer();
         }
 
         public void Initialize_Timer()
