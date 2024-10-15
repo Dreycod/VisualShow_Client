@@ -28,7 +28,6 @@ namespace VisualShow_Client
         Page_Agenda page_agenda;
         Page_Dates page_dates;
         Page_Media page_media;
-        DAO_Ecrans dao_ecrans;
 
         int mainPage = 5000; // 30000
         int normalPage = 1; // 20000
@@ -42,7 +41,7 @@ namespace VisualShow_Client
             page_agenda = new Page_Agenda();
             page_dates = new Page_Dates();
             page_media = new Page_Media();
-            dao_ecrans = new DAO_Ecrans();
+            MethodAsync(normalPage, mainPage);
         }
 
         public async void MethodAsync(int normalPage, int mainPage)
@@ -88,16 +87,6 @@ namespace VisualShow_Client
             }
 
             await Task.Delay(delay);
-        }
-
-        private void Menu_Click(object sender, RoutedEventArgs e)
-        {
-        }
-
-        private void Ecran_ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var selectedItem = (Ecrans)Ecran_ComboBox.SelectedItem;
-            MessageBox.Show($"Selected: {selectedItem.name}");
         }
     }
 }
