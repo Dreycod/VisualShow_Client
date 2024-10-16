@@ -8,13 +8,13 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Background="White">
 
-    <Grid>
+    <Grid Background="#FF272727" >
         <Grid.RowDefinitions>
             <RowDefinition Height="0.3*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0" Background="LightGray" Opacity="0.5" Margin="20">
+        <Grid Grid.Row="0" Background="LightGray"  Margin="20">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
@@ -35,7 +35,7 @@
             <Border Name="Media_Border" Grid.Column="4" Style="{StaticResource Selected_Menu_Bar}"/>
         </Grid>
 
-        <Grid>
+        <Grid Grid.Row="1">
                 <ListView x:Name="ImageListView">
                     <ListView.ItemTemplate>
                         <DataTemplate>

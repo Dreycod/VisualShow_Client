@@ -24,7 +24,18 @@
         </Storyboard>
     </Window.Resources>
 
-    <Grid x:Name="GridContainer" RenderTransformOrigin="0.5,0.5">
+    <Grid x:Name="GridContainer" RenderTransformOrigin="0.5,0.5" Background="#FF272727">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
 
+        <TextBlock x:Name="TextBlockPage" Text="Select Your Screen" FontSize="25" Margin="0,0,0,100" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+        <ComboBox x:Name="ComboBoxPages" Width="200" Height="40" Style="{StaticResource DarkComboBoxStyle}" SelectionChanged="ComboBoxPages_SelectionChanged">
+
+        </ComboBox>
     </Grid>
 </Window>

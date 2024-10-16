@@ -12,13 +12,13 @@
         <DropShadowEffect x:Key="ShadowEffect" BlurRadius="3" ShadowDepth="1" Color="#FF000000"/>
     </UserControl.Resources>
 
-    <Grid>
+    <Grid Background="#FF272727" >
         <Grid.RowDefinitions>
             <RowDefinition Height="0.3*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0" Background="LightGray" Opacity="0.5" Margin="20">
+        <Grid Grid.Row="0" Background="LightGray" Margin="20">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>

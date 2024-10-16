@@ -12,22 +12,25 @@
     </Style>
 
     <Style x:Key="Menu_Button" TargetType="{x:Type Button}">
-        <Setter Property="TextBlock.FontSize" Value="20"/>
-        <Setter Property="TextBlock.FontFamily" Value="Ressources/Font/#Roboto-Thin"/>
-        <Setter Property="TextBlock.FontWeight" Value="Thin"/>
+        <Setter Property="FontFamily" Value="Segoe UI"/>
+        <Setter Property="FontSize" Value="20"/>
+        <Setter Property="Foreground" Value="#B0B0B0"/>
         <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="Foreground" Value="White"/>
-        <Setter Property="BorderBrush" Value="Transparent"/>
-        <Setter Property="TextBlock.VerticalAlignment" Value="Center" />
-        <Setter Property="TextBlock.Margin" Value="0,0,0,0"/>
+        <Setter Property="Padding" Value="10,5"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Cursor" Value="Hand"/>
     </Style>
 
     <Style x:Key="Selected_Menu_Button" TargetType="{x:Type Button}">
         <Setter Property="TextBlock.FontSize" Value="20"/>
-        <Setter Property="TextBlock.FontFamily" Value="Ressources/Font/#Roboto-Thin"/>
+        <Setter Property="FontFamily" Value="Segoe UI"/>
         <Setter Property="TextBlock.FontWeight" Value="Thin"/>
         <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="Foreground" Value="Yellow"/>
+        <Setter Property="Foreground" Value="#FFFFD700"/>
+        <!-- Gold for Active Tab -->
+        <Setter Property="FontWeight" Value="Bold"/>
         <Setter Property="BorderBrush" Value="Transparent"/>
         <Setter Property="TextBlock.VerticalAlignment" Value="Center" />
         <Setter Property="TextBlock.Margin" Value="0,0,0,0"/>
@@ -35,7 +38,7 @@
 
 
     <Style x:Key="Menu_Bar" TargetType="{x:Type Border}">
-        <Setter Property="Background" Value="Black"/>
+        <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Opacity" Value="0.2"/>
         <Setter Property="BorderThickness" Value="3"/>
         <Setter Property="Height" Value="10"/>
@@ -44,11 +47,11 @@
     </Style>
 
     <Style x:Key="Selected_Menu_Bar" TargetType="{x:Type Border}">
-        <Setter Property="Background" Value="Yellow"/>
+        <Setter Property="Background" Value="#FFFFD700"/>
         <Setter Property="Opacity" Value="1"/>
         <Setter Property="BorderThickness" Value="3"/>
         <Setter Property="Height" Value="10"/>
-        <Setter Property="Width" Value="80"/>
+        <Setter Property="Width" Value="100"/>
         <Setter Property="Margin" Value="0,25,0,0"/>
     </Style>
     <!-- <Style x:Key="menuButton" TargetType="Button">
@@ -75,6 +78,92 @@
             </Trigger>
         </Style.Triggers>
     </Style>-->
-    
-    
+
+    <Style x:Key="DarkComboBoxStyle" TargetType="ComboBox">
+        <!-- Set common properties -->
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="Padding" Value="5"/>
+        <Setter Property="Background">
+            <Setter.Value>
+                <SolidColorBrush Color="#FF333333"/>
+                <!-- Dark background -->
+            </Setter.Value>
+        </Setter>
+        <Setter Property="BorderBrush" Value="#FF202020"/>
+        <!-- Darker border -->
+        <Setter Property="BorderThickness" Value="2"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ComboBox">
+                    <Grid>
+                        <!-- Background and border of the ComboBox -->
+                        <Border Name="Border"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="4">
+                            <!-- Selected item display -->
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"
+                                              Content="{TemplateBinding SelectionBoxItem}"
+                                              ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"/>
+                        </Border>
+
+                        <!-- ToggleButton for dropdown arrow -->
+                        <ToggleButton Name="PART_ToggleButton" Grid.Column="2"
+                                      Focusable="False"
+                                      IsChecked="{Binding Path=IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}">
+                            <Path x:Name="Arrow" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                  Data="M 0 0 L 4 4 L 8 0 Z" Fill="White"/>
+                        </ToggleButton>
+
+                        <!-- Popup for the drop-down list -->
+                        <Popup Name="PART_Popup" IsOpen="{TemplateBinding IsDropDownOpen}" 
+                               Placement="Bottom" AllowsTransparency="True" Focusable="False">
+                            <Grid Name="DropDown"
+                                  SnapsToDevicePixels="True"
+                                  MinWidth="{TemplateBinding ActualWidth}"
+                                  MaxHeight="200">
+                                <!-- Drop-down list border -->
+                                <Border x:Name="DropDownBorder" 
+                                        Background="#FF2A2A2A"
+                                        BorderBrush="#FF444444" 
+                                        BorderThickness="2">
+                                    <ScrollViewer Margin="4" SnapsToDevicePixels="True">
+                                        <StackPanel IsItemsHost="True" 
+                                                    KeyboardNavigation.DirectionalNavigation="Contained"/>
+                                    </ScrollViewer>
+                                </Border>
+                            </Grid>
+                        </Popup>
+                    </Grid>
+
+                    <!-- Control template triggers -->
+                    <ControlTemplate.Triggers>
+                        <!-- Change border color on focus -->
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter TargetName="Border" Property="BorderBrush" Value="Black"/>
+                        </Trigger>
+                        <!-- Change drop-down border color when open -->
+                        <Trigger Property="IsDropDownOpen" Value="True">
+                            <Setter TargetName="DropDownBorder" Property="BorderBrush" Value="Black"/>
+                        </Trigger>
+                        <!-- Change arrow direction when dropdown is open -->
+                        <Trigger Property="IsDropDownOpen" Value="True">
+                            <Setter TargetName="Arrow" Property="RenderTransform">
+                                <Setter.Value>
+                                    <RotateTransform Angle="180"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
 </ResourceDictionary>

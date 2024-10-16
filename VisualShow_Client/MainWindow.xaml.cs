@@ -28,10 +28,7 @@ namespace VisualShow_Client
         Page_Agenda page_agenda;
         Page_Dates page_dates;
         Page_Media page_media;
-
-        int mainPage = 5000; // 30000
-        int normalPage = 1; // 20000
-
+        DAO_Ecrans daoEcrans;
         public MainWindow()
         {
             InitializeComponent();
@@ -41,7 +38,25 @@ namespace VisualShow_Client
             page_agenda = new Page_Agenda();
             page_dates = new Page_Dates();
             page_media = new Page_Media();
-            MethodAsync(normalPage, mainPage);
+            daoEcrans = new DAO_Ecrans();
+
+            LoadEcran();
+         
+        }
+
+        public async void LoadEcran()
+        {
+            var ecrans = await daoEcrans.GetEcrans();
+            if (ecrans != null)
+            {
+                int count = ecrans.Count;
+                
+                for (int i = 0; i < count; i++)
+                {
+                    ComboBoxPages.Items.Add(ecrans[i].name);
+                }
+                
+            }
         }
 
         public async void MethodAsync(int normalPage, int mainPage)
@@ -87,6 +102,16 @@ namespace VisualShow_Client
             }
 
             await Task.Delay(delay);
+        }
+
+        private void ComboBoxPages_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+            ComboBoxPages.Visibility = Visibility.Hidden;
+            int mainPage = 5000; // 30000
+            int normalPage = 2000; // 20000
+            MethodAsync(normalPage, mainPage);
+
         }
     }
 }
