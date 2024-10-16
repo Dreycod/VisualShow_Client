@@ -10,7 +10,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -23,7 +22,6 @@ using Google.Apis.Calendar.v3.Data;
 using System.Collections.ObjectModel;
 using Google.Apis.Calendar.v3;
 using System.Reflection;
-using Microsoft.Extensions.Logging;
 using VisualShow_Admin.Model;
 using VisualShow_Admin.Controller;
 
