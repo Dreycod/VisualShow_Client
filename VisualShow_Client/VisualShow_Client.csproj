@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Ressources\credentials.json" />
     <None Remove="Ressources\Font\Roboto-Light.ttf" />
     <None Remove="Ressources\Font\Roboto-Thin.ttf" />
     <None Remove="Ressources\Font\Roboto-ThinItalic.ttf" />
@@ -45,6 +46,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Ressources\credentials.json" />
     <Resource Include="Ressources\Font\Roboto-Light.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>

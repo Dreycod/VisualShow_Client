@@ -42,28 +42,28 @@ namespace VisualShow_Client.View
         }
         private void LoadGoogleCalendarEvents(DateTime selectedDate)
         {
-            var service = GoogleCalendarAuth.GetCalendarService();
-            var events = service.Events.List("primary").Execute().Items;
+            //var service = GoogleCalendarAuth.GetCalendarService();
+            //var events = service.Events.List("primary").Execute().Items;
 
-            var eventList = new List<Event>();
+            //var eventList = new List<Event>();
 
-            foreach (var item in events)
-            {
-                var startDateTime = item.Start?.DateTime;
-                var startDate = startDateTime?.Date; // Get only the date part
+            //foreach (var item in events)
+            //{
+            //    var startDateTime = item.Start?.DateTime;
+            //    var startDate = startDateTime?.Date; // Get only the date part
 
-                if (startDate == selectedDate.Date)
-                {
-                    eventList.Add(new Event
-                    {
-                        Summary = item.Summary,
-                        UpdatedDateTimeOffset = item.Start.DateTime,
-                        EndTimeUnspecified = item.EndTimeUnspecified
-                    });
-                }
-            }
+            //    if (startDate == selectedDate.Date)
+            //    {
+            //        eventList.Add(new Event
+            //        {
+            //            Summary = item.Summary,
+            //            UpdatedDateTimeOffset = item.Start.DateTime,
+            //            EndTimeUnspecified = item.EndTimeUnspecified
+            //        });
+            //    }
+            //}
 
-            EventsListView.ItemsSource = eventList;
+            //EventsListView.ItemsSource = eventList;
         }
 
         private void Calendar_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)

@@ -53,8 +53,8 @@
             <Border Name="Media_Border" Grid.Column="4" Style="{StaticResource Menu_Bar}"/>
         </Grid>
 
-        <Calendar VerticalAlignment="Center" Grid.Row="1" Name="Calendar_Events" Style="{StaticResource CalendarStyle1}" Grid.Column="0">
-
+        <Calendar VerticalAlignment="Center" Grid.Row="1" Name="Calendar_Events" Grid.Column="0">
+            
         </Calendar>
         <!-- Content Area with Shadow -->
         <Grid Grid.Row="1" Margin="20,0,20,20" Name="Grid_Content" Grid.Column="1">
