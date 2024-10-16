@@ -22,8 +22,9 @@
 
         <Grid Grid.Column="0">
             <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="75*"/>
+                <RowDefinition Height="49*"/>
+                <RowDefinition Height="26*"/>
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="0">
                 <TextBlock Name="TB_CurrentTime" Text="13:55" VerticalAlignment="Bottom" FontSize="60" Margin="20,20,0,0" Foreground="{StaticResource TextColorBrush}"/>
@@ -33,11 +34,31 @@
                     <TextBlock x:Name="TB_MainTemp" Text="13°C" VerticalAlignment="Top" FontSize="40" Margin="10,0,0,0" Foreground="{StaticResource TextColorBrush}"/>
                 </StackPanel>
             </StackPanel>
-            <StackPanel Grid.Row="1">
+            <StackPanel Grid.Row="1" Grid.RowSpan="2">
                 <TextBlock x:Name="TB_TodayDay" Text="Mercredi" FontSize="70" VerticalAlignment="Bottom" Margin="30,0,0,0" Foreground="{StaticResource TextColorBrush}"/>
                 <TextBlock x:Name="TB_TodayDate" Text="11 Septembre 2024" FontSize="40" VerticalAlignment="Top" Margin="30,0,0,0" Foreground="{StaticResource TextColorBrush}"/>
             </StackPanel>
+
+            <StackPanel Orientation="Vertical" Grid.Row="2" Margin="30,0,0,0">
+                <ScrollViewer Width="Auto" Height="100" VerticalScrollBarVisibility="Auto">
+                    <TextBlock x:Name="TB_DailyQuote" 
+                   Text="Texte" 
+                   FontSize="20" 
+                   TextWrapping="Wrap" 
+                   Foreground="{StaticResource TextColorBrush}"/>
+                </ScrollViewer>
+
+                <TextBlock x:Name="TB_QuoteAuthor" 
+               Text="Auteur" 
+               FontSize="17" 
+               VerticalAlignment="Top" 
+               Margin="0,0,0,0" 
+               Foreground="{StaticResource TextColorBrush}"/>
+            </StackPanel>
+
         </Grid>
+
+
 
         <Grid Grid.Column="1" Background="#80FFFFFF">
             <!-- 50% White -->

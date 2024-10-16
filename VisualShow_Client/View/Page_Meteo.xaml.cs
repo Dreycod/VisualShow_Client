@@ -30,21 +30,28 @@ namespace VisualShow_Client.View
             InitializeComponent();
             dao_mqtt = new DAO_MQTT();
             timer = new DispatcherTimer();
-            UpdateUI();
             Initialize_Timer();
+            InitializeMQTT();
+            UpdateUI();
+            
+        }
+
+        public async void InitializeMQTT()
+        {
+            await dao_mqtt.InitializeAsync();
         }
 
         public void Initialize_Timer()
         {
             timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromSeconds(30);
+            timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick += Timer_Tick;
             timer.Start();
         }
 
         public void Timer_Tick(object sender, EventArgs e)
         {
-            seconds += 30;
+            seconds += 1;
             Debug.WriteLine(seconds);
             UpdateUI();
             Debug.WriteLine("Checking air quality...");
@@ -52,10 +59,11 @@ namespace VisualShow_Client.View
 
         public void UpdateUI()
         {
-            List<string> mqttData = dao_mqtt.GetData();
+            List<string> mqttData = new List<string>();
+            mqttData = dao_mqtt.GetData();
+
             if (mqttData.Count == 0)
             {
-                MessageBox.Show("No data received.");
                 return;
             }
 
@@ -71,12 +79,17 @@ namespace VisualShow_Client.View
 
         private void CheckAirQuality(string airQuality)
         {
-            int airQualityValue = int.Parse(airQuality);
-
-            if (airQualityValue > 45 && !isPopupCooldownActive)
+            if (double.TryParse(airQuality, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out double airQualityValue))
             {
-                ShowWarningPopup("Faite attention, la qualité d'air est basse et c'est fortement recommendé de ouvrir les fenêtres");
-                isPopupCooldownActive = true;
+                if (airQualityValue > 45 && !isPopupCooldownActive)
+                {
+                    ShowWarningPopup("Faite attention, la qualité d'air est basse et c'est fortement recommandé de ouvrir les fenêtres");
+                    isPopupCooldownActive = true;
+                }
+            }
+            else
+            {
+                return;
             }
         }
 
@@ -108,18 +121,24 @@ namespace VisualShow_Client.View
 
         public string JudgeAirQuality(string airQuality)
         {
-            double airQualityValue = double.Parse(airQuality);
-
-            if (airQualityValue <= 12) // Very Good
-                return " (Very Good)";
-            else if (airQualityValue <= 25) // Good
-                return " (Good)";
-            else if (airQualityValue <= 50) // Moderate
-                return " (Moderate)";
-            else if (airQualityValue <= 75) // Bad
-                return " (Bad)";
-            else // Very Bad
-                return " (Very Bad)";
+            if (double.TryParse(airQuality, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out double airQualityValue))
+            {
+                if (airQualityValue <= 12) // Very Good
+                    return " (Very Good)";
+                else if (airQualityValue <= 25) // Good
+                    return " (Good)";
+                else if (airQualityValue <= 50) // Moderate
+                    return " (Moderate)";
+                else if (airQualityValue <= 75) // Bad
+                    return " (Bad)";
+                else // Very Bad
+                    return " (Very Bad)";
+            }
+            else
+            {
+                // Handle the case where parsing fails
+                return " (Invalid Data)";
+            }
         }
 
         public void Menu_Click(object sender, RoutedEventArgs e) { }

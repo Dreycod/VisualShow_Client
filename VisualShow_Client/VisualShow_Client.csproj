@@ -17,6 +17,7 @@
     <None Remove="Ressources\Images\HumidityIcon.png" />
     <None Remove="Ressources\Images\TemperatureIcon.png" />
     <None Remove="Ressources\placeholder.jpg" />
+    <None Remove="Ressources\QuotesCategory.txt" />
   </ItemGroup>
 
   <ItemGroup>
@@ -38,6 +39,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Google.Apis.Calendar.v3" Version="1.68.0.3557" />
     <PackageReference Include="MQTTnet" Version="4.3.7.1207" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
@@ -48,6 +50,9 @@
     </Resource>
     <Resource Include="Ressources\Font\Roboto-Thin.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Ressources\QuotesCategory.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
@@ -14,8 +15,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Windows.Threading;
+using VisualShow_Client.Controller;
 using WeatherView.Service;
 
 namespace VisualShow_Client.View
@@ -28,13 +29,15 @@ namespace VisualShow_Client.View
         int seconds = 0;
         DispatcherTimer timer;
         APIManager apimanager;
+        API_Quotes api_quotes;
 
 
         public Page_Accueil()
         {
             InitializeComponent();
             apimanager = new APIManager();
-            
+            api_quotes = new API_Quotes();
+            InitializeQuote();
             UpdateUI("Annecy");
             timer = new DispatcherTimer();
             Initialize_Timer();
@@ -60,6 +63,32 @@ namespace VisualShow_Client.View
                 Debug.WriteLine("Resetting to 0");
             }
         }
+
+        private async void InitializeQuote() 
+        {
+            string QuotesCategoryFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\..\\..\\Ressources", "QuotesCategory.txt");
+            string[] lines = File.ReadAllLines(QuotesCategoryFile);
+            Random rand = new Random();
+            int randomIndex = rand.Next(0, lines.Length);
+            string randomCategory = lines[randomIndex];
+            MessageBox.Show(randomCategory);
+
+            List<QuotesRoot> quotesList = await api_quotes.GetQuotesAsync(randomCategory);
+            if (quotesList != null && quotesList.Count > 0)
+            {
+                Random quoteRand = new Random();
+                int quoteIndex = quoteRand.Next(0, quotesList.Count);
+                QuotesRoot selectedQuote = quotesList[quoteIndex];
+
+                TB_DailyQuote.Text = selectedQuote.quote;
+                TB_QuoteAuthor.Text = "- " + selectedQuote.author;
+            }
+            else
+            {
+                Console.WriteLine("No quotes found for this category.");
+            }
+        }
+
         private async void UpdateUI(string cityUpdate)
         {
 
@@ -67,78 +96,80 @@ namespace VisualShow_Client.View
             TextBlock[] hourTexts = { Heure_1, Heure_2, Heure_3, Heure_4, Heure_5, Heure_6 };
             TextBlock[] tempTexts = { Temp_1, Temp_2, Temp_3, Temp_4, Temp_5, Temp_6 };
 
-            try
+            Root root = await apimanager.DataGrabber(cityUpdate);
+
+            CurrentCondition currentcondition = root.current_condition;
+            FcstDay0 TodayForecast = root.fcst_day_0;
+
+            HourlyData TodayForecasT = root.fcst_day_1.hourly_data;
+
+            DateTime now = DateTime.Now;
+
+            Uri weatherNow = new Uri(currentcondition.icon_big, UriKind.Absolute);
+
+            TB_CurrentTime.Text = now.ToString("HH:mm");
+            TB_MainTemp.Text = currentcondition.tmp.ToString() + "°C";
+            Today_Image.Source = new BitmapImage(weatherNow);
+            TB_TodayDate.Text = now.ToString("dd MMMM yyyy");
+
+            string dayInFrench = now.ToString("dddd", new CultureInfo("fr-FR"));
+            string capitalizedDay = char.ToUpper(dayInFrench[0]) + dayInFrench.Substring(1);
+
+            TB_TodayDay.Text = capitalizedDay;
+
+            for (int i = 0; i < 6; i++)
             {
-                Root root = await apimanager.DataGrabber(cityUpdate);
+                string hourKey;
+                string displayTime;
 
-                CurrentCondition currentcondition = root.current_condition;
-                FcstDay0 TodayForecast = root.fcst_day_0;
+                // Calculate the future time by adding i+1 hours to 'now'
+                DateTime futureTime = now.AddHours(i + 1);
+                int currentHour = futureTime.Hour;
 
-                HourlyData TodayForecasT = root.fcst_day_1.hourly_data;
-
-                DateTime now = DateTime.Now;
-
-                Uri weatherNow = new Uri(currentcondition.icon_big, UriKind.Absolute);
-
-
-                TB_CurrentTime.Text = now.ToString("HH:mm");
-                TB_MainTemp.Text = currentcondition.tmp.ToString() + "°C";
-                Today_Image.Source = new BitmapImage(weatherNow);
-                TB_TodayDate.Text = now.ToString("dd MMMM yyyy");
-
-                string dayInFrench = now.ToString("dddd", new CultureInfo("fr-FR"));
-                string capitalizedDay = char.ToUpper(dayInFrench[0]) + dayInFrench.Substring(1);
-
-                TB_TodayDay.Text = capitalizedDay;
-
-                for (int i = 0; i < 6; i++)
+                // Format hourKey as 1H00, 2H00, 10H00, etc.
+                if (currentHour < 10)
                 {
-                    string hourKey;
-                    string displayTime;
+                    hourKey = futureTime.ToString("H") + "H00"; // Single digit for hours < 10 (e.g., 1H00, 2H00)
+                }
+                else
+                {
+                    hourKey = futureTime.ToString("HH") + "H00"; // Two digits for hours >= 10 (e.g., 10H00, 22H00)
+                }
 
-                    // Get the hour for the current time + i hours
-                    int currentHour = now.AddHours(i + 1).Hour;
+                // Format displayTime as 1:00, 10:00, 22:00, etc.
+                displayTime = $"{currentHour}:00"; // No leading zero for hours < 10
 
-                    // Construct the hourKey for property access (XH00 or XXH00)
-                    hourKey = $"{currentHour}H00"; // No need for leading zero logic since format is consistent
+                PropertyInfo propInfo = typeof(HourlyData).GetProperty($"_{hourKey}");
 
-                    // Construct display time (H:00 for single digits, HH:00 for double digits)
-                    displayTime = $"{currentHour}:00"; // This works for both single and double digits
+                if (propInfo != null)
+                {
+                    var hourlyData = propInfo.GetValue(TodayForecast.hourly_data);
 
-                    // Try to get the property from the HourlyData class using the hourKey
-                    PropertyInfo propInfo = typeof(HourlyData).GetProperty($"_{hourKey}");
-
-                    if (propInfo != null)
+                    if (hourlyData != null)
                     {
-                        // Get the hourly data for the current hour
-                        var hourlyData = propInfo.GetValue(TodayForecast.hourly_data);
+                        var iconProperty = hourlyData.GetType().GetProperty("ICON");
+                        var tmpProperty = hourlyData.GetType().GetProperty("TMP2m");
 
-                        if (hourlyData != null)
+                        if (iconProperty != null && tmpProperty != null)
                         {
-                            // Retrieve the ICON and TMP2m properties
-                            var iconProperty = hourlyData.GetType().GetProperty("ICON");
-                            var tmpProperty = hourlyData.GetType().GetProperty("TMP2m");
+                            string iconValue = (string)iconProperty.GetValue(hourlyData);
+                            string tmpValue = (string)tmpProperty.GetValue(hourlyData);
 
-                            if (iconProperty != null && tmpProperty != null)
-                            {
-                                // Get the icon and temperature values
-                                string iconValue = (string)iconProperty.GetValue(hourlyData);
-                                string tmpValue = (string)tmpProperty.GetValue(hourlyData);
+                            // Set the text for hour and temperature
+                            hourTexts[i].Text = displayTime; // Display the time in 1:00, 2:00, 10:00, etc.
+                            string bigIconValue = iconValue.Replace(".png", "-big.png");
 
-                                // Modify the iconValue to get the big version
-                                string bigIconValue = iconValue.Replace(".png", "-big.png");
+                            // Use CultureInfo.InvariantCulture to parse the temperature correctly
+                            tempTexts[i].Text = Math.Round(double.Parse(tmpValue, CultureInfo.InvariantCulture)).ToString() + "°C";
 
-                                // Set the text for the display
-                                hourTexts[i].Text = displayTime; // Use the displayTime format
-                                tempTexts[i].Text = Math.Round(double.Parse(tmpValue)).ToString() + "°C";
-                                weatherImages[i].Source = new BitmapImage(new Uri(bigIconValue, UriKind.RelativeOrAbsolute));
-                            }
+                            // Set the weather image source
+                            weatherImages[i].Source = new BitmapImage(new Uri(bigIconValue, UriKind.RelativeOrAbsolute));
                         }
                     }
                 }
             }
-            catch (Exception ex)
-            {            }
+
+
         }
     }
 }

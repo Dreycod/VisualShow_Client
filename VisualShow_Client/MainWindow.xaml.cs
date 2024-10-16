@@ -108,10 +108,9 @@ namespace VisualShow_Client
         {
 
             ComboBoxPages.Visibility = Visibility.Hidden;
-            int mainPage = 5000; // 30000
-            int normalPage = 2000; // 20000
+            int mainPage = 20000; // 30000
+            int normalPage = 30000; // 20000
             MethodAsync(normalPage, mainPage);
-
         }
     }
 }
