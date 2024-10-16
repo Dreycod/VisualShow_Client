@@ -21,10 +21,10 @@ namespace VisualShow_Admin.Controller
         {
             UserCredential credential; // Créer un objet UserCredential pour stocker les informations d'authentification
 
-            string credentialsPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Service", "credentials.json"); // Chemin d'accès au fichier de clés
+            string credentialsPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Ressources", "credentials.json"); // Chemin d'accès au fichier de clés
             using (var stream = new FileStream(credentialsPath, FileMode.Open, FileAccess.Read))  // Ouvrir le fichier de clés
             {
-                string credPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Service", "token.json");     // Chemin d'accès au fichier de jetons
+                string credPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Ressources", "token.json");     // Chemin d'accès au fichier de jetons
 
                 credential = GoogleWebAuthorizationBroker.AuthorizeAsync( // Autoriser l'accès au calendrier
                     GoogleClientSecrets.FromStream(stream).Secrets, // Charger les informations d'identification du client
