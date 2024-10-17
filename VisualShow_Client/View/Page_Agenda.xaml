@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:VisualShow_Client.View"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="1080" d:DesignWidth="1920"
       Background="White">
 
     <UserControl.Resources>
@@ -15,19 +15,13 @@
                       BlurRadius="10"/>
     </UserControl.Resources>
 
-
     <Grid Background="#FF272727">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="199*"/>
-            <ColumnDefinition Width="201*"/>
-        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="0.3*"/>
+            <RowDefinition Height="0.2*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!-- Top Navigation Bar -->
-        <Grid Grid.Row="0" Background="LightGray" Margin="20,20,20,20" Grid.ColumnSpan="2">
+        <Grid Grid.Row="0" Background="LightGray" Margin="20">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
@@ -53,23 +47,62 @@
             <Border Name="Media_Border" Grid.Column="4" Style="{StaticResource Menu_Bar}"/>
         </Grid>
 
-        <Calendar VerticalAlignment="Center" Grid.Row="1" Name="Calendar_Events" Grid.Column="0">
-            
-        </Calendar>
+        <Calendar Grid.Row="1" x:Name="DateCalendar" CalendarItemStyle="{DynamicResource CalendarCalendarItemStyle1}" CalendarDayButtonStyle="{DynamicResource CalendarCalendarDayButtonStyle1}" Style="{DynamicResource CalendarStyle1}"/>
+
+
         <!-- Content Area with Shadow -->
         <Grid Grid.Row="1" Margin="20,0,20,20" Name="Grid_Content" Grid.Column="1">
             <Border Background="White" CornerRadius="4" Padding="10" 
                 BorderBrush="LightGray" BorderThickness="1"
                 Effect="{StaticResource DropShadowEffect}">
-                <ListView x:Name="EventsListView" Grid.Row="1" Margin="10">
+                <ListView Grid.Column="1" Name="EventsListView" Background="Transparent" ItemsSource="{Binding Events}" >
+                    <ListView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel Orientation="Vertical"/>
+                        </ItemsPanelTemplate>
+                    </ListView.ItemsPanel>
+
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <Border Margin="0 0 0 10" Background="LightGray" CornerRadius="10">
+                            <Border BorderThickness="3" CornerRadius="10" Margin="5" Padding="5" VerticalAlignment="Top">
+
+                                <Border.Background>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                        <GradientStop Color="#333138" Offset="0"/>
+                                        <GradientStop Color="#515052" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Border.Background>
+
+                                <Border.BorderBrush>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                        <GradientStop Color="#FF312E" Offset="0"/>
+                                        <GradientStop Color="#333138" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Border.BorderBrush>
+
                                 <StackPanel>
-                                    <TextBlock Text="{Binding Summary}" FontWeight="Bold" Margin="0 0 0 5" />
-                                    <TextBlock Text="{Binding UpdatedDateTimeOffset}" Margin="0 0 0 5" />
-                                    <TextBlock Text="{Binding EndTimeUnspecified}" Margin="0 0 0 5" />
+                                    <StackPanel Orientation="Horizontal" Margin="0 0 0 5">
+                                        <TextBlock Text="Summary: " FontWeight="Bold" Margin="0 0 5 0" Style="{StaticResource MahAppsSimpleTextBlockStyle}" Background="Transparent"/>
+                                        <TextBlock Text="{Binding Summary}" Margin="0 0 5 0" Style="{StaticResource MahAppsSimpleTextBlockStyle}" Background="Transparent"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="0 0 0 5">
+                                        <TextBlock Text="Description: " FontWeight="Bold" Margin="0 0 5 0" Style="{StaticResource MahAppsSimpleTextBlockStyle}" Background="Transparent"/>
+                                        <TextBlock Text="{Binding Description}" Margin="0 0 5 0" Style="{StaticResource MahAppsSimpleTextBlockStyle}" Background="Transparent"/>
+                                    </StackPanel>
+
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Start Time: " FontWeight="Bold" Margin="0 0 5 0" Style="{StaticResource MahAppsSimpleTextBlockStyle}" Background="Transparent"/>
+                                        <TextBlock Text="{Binding Start.DateTime, StringFormat='dd/MM/yyyy HH:mm'}" Margin="0 0 5 0" Style="{StaticResource MahAppsSimpleTextBlockStyle}" Background="Transparent"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="End Time: " FontWeight="Bold" Margin="0 0 5 0" Style="{StaticResource MahAppsSimpleTextBlockStyle}" Background="Transparent"/>
+                                        <TextBlock Text="{Binding  End.DateTime, StringFormat='dd/MM/yyyy HH:mm'}" Margin="0 0 5 0" Style="{StaticResource MahAppsSimpleTextBlockStyle}" Background="Transparent"/>
+                                    </StackPanel>
+
+
                                 </StackPanel>
+
+
                             </Border>
                         </DataTemplate>
                     </ListView.ItemTemplate>
@@ -77,5 +110,5 @@
             </Border>
         </Grid>
     </Grid>
-
+    
 </UserControl>

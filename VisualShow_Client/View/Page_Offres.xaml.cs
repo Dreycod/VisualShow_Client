@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using VisualShow_Admin.Controller;
+using VisualShow_Admin.Model;
+using VisualShow_Client.Controller;
 
 namespace VisualShow_Client.View
 {
@@ -21,18 +23,19 @@ namespace VisualShow_Client.View
     /// </summary>
     public partial class Page_Offres : UserControl
     {
-        DAO_Events dao_events;
+        DAO_Offres dao_offres;
 
         public Page_Offres()
         {
             InitializeComponent();
-            dao_events = new DAO_Events();
+            dao_offres = new DAO_Offres();
             LoadEvents();
 
         }
         public async void LoadEvents()
         {
-            var events = await dao_events.GetEvents();
+            var events = await dao_offres.GetOffres();
+
             IC_Offres.ItemsSource = events;
         }
         private void Menu_Click(object sender, RoutedEventArgs e)

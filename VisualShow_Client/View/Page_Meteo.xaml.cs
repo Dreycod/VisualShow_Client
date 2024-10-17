@@ -9,21 +9,19 @@ using WeatherView.Service;
 
 namespace VisualShow_Client.View
 {
+
     /// <summary>
     /// Logique d'interaction pour Page_Meteo.xaml
     /// </summary>
     public partial class Page_Meteo : UserControl
     {
-       
+       public string emergencyMQTTMessage = "";
 
         //variables dans lesquelles ont stocker les valeurs obtenues avec mqtt
-        
-
-        int seconds;
-
         DispatcherTimer timer;
         DAO_MQTT dao_mqtt;
         private bool isPopupCooldownActive;
+        int seconds = 0;
 
         public Page_Meteo()
         {
@@ -51,10 +49,14 @@ namespace VisualShow_Client.View
 
         public void Timer_Tick(object sender, EventArgs e)
         {
-            seconds += 1;
-            Debug.WriteLine(seconds);
+            
             UpdateUI();
-            Debug.WriteLine("Checking air quality...");
+            seconds++;
+            if (seconds == 30)
+            {
+                seconds = 0;
+                emergencyMQTTMessage = "";
+            }
         }
 
         public void UpdateUI()
@@ -72,8 +74,12 @@ namespace VisualShow_Client.View
             TB_DecibelsValue.Text = mqttData[2] + " dB";
 
             string airQualityValueStr = mqttData[3];
-            TB_AirQualityValue.Text = airQualityValueStr + JudgeAirQuality(airQualityValueStr);
+            if (mqttData[4] != "")
+            {
+                emergencyMQTTMessage = mqttData[4];
+            }
 
+            TB_AirQualityValue.Text = airQualityValueStr + JudgeAirQuality(airQualityValueStr);
             CheckAirQuality(airQualityValueStr);
         }
 

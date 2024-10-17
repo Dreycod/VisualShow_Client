@@ -12,12 +12,12 @@ namespace VisualShow_Client.Controller
 {
     public class DAO_Offres
     {
-        public async Task<List<Events>> GetOffres()
+        public async Task<List<Offres>> GetOffres()
         {
             try
             {
                 HttpClient client = new HttpClient();
-                HttpResponseMessage response = await client.GetAsync("https://drey.alwaysdata.net/getEvents");
+                HttpResponseMessage response = await client.GetAsync("https://drey.alwaysdata.net/getOffres");
                 if (response.IsSuccessStatusCode)
                 {
                     var content = await response.Content.ReadAsStringAsync();
@@ -26,7 +26,9 @@ namespace VisualShow_Client.Controller
                         MessageBox.Show("Error: " + content);
                         return null;
                     }
-                    List<Events> events = JsonConvert.DeserializeObject<List<Events>>(content);
+                    List<Offres> events = JsonConvert.DeserializeObject<List<Offres>>(content);
+                    // Convert string type to enum
+                    
                     return events;
 
                 }
