@@ -77,6 +77,15 @@ namespace VisualShow_Client.Controller
             var topic = e.ApplicationMessage.Topic;
             var payload = Encoding.UTF8.GetString(e.ApplicationMessage.Payload);
 
+            //if (payload == "FireAlert")
+            //{
+                
+            //}
+            //else
+            //{
+            //}
+
+
             switch (topic)
             {
                 case "KM103/humidity":
@@ -97,7 +106,7 @@ namespace VisualShow_Client.Controller
                     break;
                 case "KM103/emergency":
                     emergency = payload;
-                    MqttData.Add(emergency);
+                    MessageBox.Show(emergency, "Message de l'administrateur", MessageBoxButton.OK);
                     break;
             }
             MessageBox.Show($"Humidité : {humidity}\nTempérature : {temperature}\nDécibels : {decibels}\nQualité :{air_quality}, Emergency: {emergency}");
