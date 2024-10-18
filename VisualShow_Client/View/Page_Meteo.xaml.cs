@@ -53,7 +53,7 @@ namespace VisualShow_Client.View
 
         public async void InitializeMQTT()
         {
-            await dao_mqtt.InitializeAsync();
+            await dao_mqtt.InitializeAsync(ecranName);
         }
 
         public void Initialize_Timer()

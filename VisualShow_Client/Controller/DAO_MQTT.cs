@@ -27,7 +27,7 @@ namespace VisualShow_Client.Controller
         List<string> MqttData = new List<string>();
 
 
-        async Task ConnexionBroker()
+        async Task ConnexionBroker(string ecran_name)
         {
             var mqttnet = new MqttFactory();
             clientmqtt = mqttnet.CreateMqttClient();
@@ -42,11 +42,11 @@ namespace VisualShow_Client.Controller
             var listeAbonnementsTopics = new List<MqttTopicFilter>();
             List<string> topicsVoullus = new List<string>()
             {
-                "KM103/humidity",
-                "KM103/temperature",
-                "KM103/decibels",
-                "KM103/air_quality",
-                "KM103/emergency"
+                ecran_name + "/humidity",
+                ecran_name + "temperature",
+                ecran_name + "decibels",
+                ecran_name + "air_quality",
+                ecran_name + "/emergency"
             };
             foreach (var topic in topicsVoullus)
             {
@@ -111,9 +111,9 @@ namespace VisualShow_Client.Controller
 
             return MqttData;
         }
-        public async Task InitializeAsync()
+        public async Task InitializeAsync(string ecran_name)
         {
-            await ConnexionBroker();
+            await ConnexionBroker(ecran_name);
             try
             {
                 // fonction qui appelle la fonction GestionMessage a chaque fois qu'un message est reçu
