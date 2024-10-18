@@ -13,7 +13,7 @@ namespace WpfAgendaDatabase.Service.DAO
     public class DAO_GoogleCalendar
     {
         private static string[] Scopes = { CalendarService.Scope.CalendarReadonly };
-        private static string ApplicationName = "AgendaDB";
+        private static string ApplicationName = "Smart Display";
 
         // Méthode pour obtenir le service de calendrier
         public static async Task<CalendarService> GetCalendarServiceAsync()
@@ -21,8 +21,8 @@ namespace WpfAgendaDatabase.Service.DAO
             UserCredential credential = await GoogleWebAuthorizationBroker.AuthorizeAsync(
                 new ClientSecrets
                 {
-                    ClientId = "536688738653-hhfdpq3e4at05ks63ql0r7rihav32cgr.apps.googleusercontent.com",
-                    ClientSecret = "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"
+                    ClientId = "952112854929-2841v2ffqsc82ihqoq5totnvkvbe8mc7.apps.googleusercontent.com",
+                    ClientSecret = "GOCSPX - D00Ez_P_ykAJAUdPfqmC7AvB8Wre"
                 },
                 Scopes,
                 "user",
