@@ -24,7 +24,6 @@ namespace VisualShow_Admin.Controller
                     var content = await response.Content.ReadAsStringAsync();
                     if (content.Contains("error"))
                     {
-                        MessageBox.Show("Error: " + content);
                         return null;
                     }
                     List<Salles> salles = JsonConvert.DeserializeObject<List<Salles>>(content);
@@ -49,7 +48,6 @@ namespace VisualShow_Admin.Controller
                     var content = await response.Content.ReadAsStringAsync();
                     if (content.Contains("error"))
                     {
-                        MessageBox.Show("Error: " + content);
                         return null;
                     }
                     Salles salle = JsonConvert.DeserializeObject<Salles>(content);
@@ -74,7 +72,6 @@ namespace VisualShow_Admin.Controller
                     var content = await response.Content.ReadAsStringAsync();
                     if (content.Contains("error"))
                     {
-                        MessageBox.Show("Error: " + content);
                         return null;
                     }
                     Salles salles = JsonConvert.DeserializeObject<Salles>(content);
@@ -94,16 +91,13 @@ namespace VisualShow_Admin.Controller
             {
                 HttpClient client = new HttpClient();
                 string json = JsonConvert.SerializeObject(new { name = name });
-                MessageBox.Show(json);
                 StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
-                MessageBox.Show(content.ToString());
                 HttpResponseMessage response = await client.PostAsync("https://drey.alwaysdata.net/AddSalle", content).ConfigureAwait(false);
                 if (response.IsSuccessStatusCode)
                 {
                     var result = await response.Content.ReadAsStringAsync();
                     if (result.Contains("error"))
                     {
-                        MessageBox.Show("Error: " + result);
                         return null;
                     }
                     Salles salle = JsonConvert.DeserializeObject<Salles>(result);
@@ -129,7 +123,7 @@ namespace VisualShow_Admin.Controller
                     var result = await response.Content.ReadAsStringAsync();
                     if (result.Contains("error"))
                     {
-                        MessageBox.Show("Error: " + result);
+
                         return null;
                     }
                     Salles salle = JsonConvert.DeserializeObject<Salles>(result);
@@ -154,7 +148,6 @@ namespace VisualShow_Admin.Controller
                     var content = await response.Content.ReadAsStringAsync();
                     if (content.Contains("error"))
                     {
-                        MessageBox.Show("Error: " + content);
                         return null;
                     }
                     Salles salle = JsonConvert.DeserializeObject<Salles>(content);

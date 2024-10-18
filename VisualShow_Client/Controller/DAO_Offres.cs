@@ -23,7 +23,6 @@ namespace VisualShow_Client.Controller
                     var content = await response.Content.ReadAsStringAsync();
                     if (content.Contains("error"))
                     {
-                        MessageBox.Show("Error: " + content);
                         return null;
                     }
                     List<Offres> events = JsonConvert.DeserializeObject<List<Offres>>(content);

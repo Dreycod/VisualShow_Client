@@ -23,7 +23,6 @@ namespace VisualShow_Admin.Controller
                     var content = await response.Content.ReadAsStringAsync();
                     if (content.Contains("error"))
                     {
-                        MessageBox.Show("Error: " + content);
                         return null;
                     }
                     List<Ecrans> ecrans = JsonConvert.DeserializeObject<List<Ecrans>>(content);
@@ -48,7 +47,6 @@ namespace VisualShow_Admin.Controller
                     var content = await response.Content.ReadAsStringAsync();
                     if (content.Contains("error"))
                     {
-                        MessageBox.Show("Error: " + content);
                         return null;
                     }
                     Ecrans ecran = JsonConvert.DeserializeObject<Ecrans>(content);
@@ -62,7 +60,7 @@ namespace VisualShow_Admin.Controller
                 return null;
             }
         }
-        public async Task<Ecrans> GetEcranByName(string name)
+        public async Task<List<Ecrans>> GetEcranByName(string name)
         {
             try
             {
@@ -73,12 +71,10 @@ namespace VisualShow_Admin.Controller
                     var content = await response.Content.ReadAsStringAsync();
                     if (content.Contains("error"))
                     {
-                        MessageBox.Show("Error: " + content);
                         return null;
                     }
-                    Ecrans ecran = JsonConvert.DeserializeObject<Ecrans>(content);
-                    return ecran;
-
+                    List<Ecrans> ecrans = JsonConvert.DeserializeObject<List<Ecrans>>(content);
+                    return ecrans;
                 }
                 return null;
             }
@@ -87,6 +83,7 @@ namespace VisualShow_Admin.Controller
                 return null;
             }
         }
+
         public async Task<Ecrans> AddEcran(string name, DateTime date, string IsOn, string id_salle)
         {
             try
@@ -94,16 +91,13 @@ namespace VisualShow_Admin.Controller
                 HttpClient client = new HttpClient();
                 string formattedDate = date.ToString("yyyy-MM-dd HH:mm:ss");
                 string json = JsonConvert.SerializeObject(new { name = name, lastUpdate = formattedDate, IsOn = IsOn, id_salle = id_salle });
-                MessageBox.Show(json);
                 StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
-                MessageBox.Show(content.ToString());
                 HttpResponseMessage response = await client.PostAsync("https://drey.alwaysdata.net/AddEcran", content).ConfigureAwait(false);
                 if (response.IsSuccessStatusCode)
                 {
                     var result = await response.Content.ReadAsStringAsync();
                     if (result.Contains("error"))
                     {
-                        MessageBox.Show("Error: " + result);
                         return null;
                     }
                     Ecrans ecran = JsonConvert.DeserializeObject<Ecrans>(result);
@@ -130,7 +124,6 @@ namespace VisualShow_Admin.Controller
                     var result = await response.Content.ReadAsStringAsync();
                     if (result.Contains("error"))
                     {
-                        MessageBox.Show("Error: " + result);
                         return null;
                     }
                     Ecrans ecran = JsonConvert.DeserializeObject<Ecrans>(result);
@@ -155,7 +148,6 @@ namespace VisualShow_Admin.Controller
                     var content = await response.Content.ReadAsStringAsync();
                     if (content.Contains("error"))
                     {
-                        MessageBox.Show("Error: " + content);
                         return null;
                     }
                     Ecrans ecran = JsonConvert.DeserializeObject<Ecrans>(content);

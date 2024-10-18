@@ -71,8 +71,6 @@ namespace VisualShow_Client.View
             Random rand = new Random();
             int randomIndex = rand.Next(0, lines.Length);
             string randomCategory = lines[randomIndex];
-            MessageBox.Show(randomCategory);
-
             List<QuotesRoot> quotesList = await api_quotes.GetQuotesAsync(randomCategory);
             if (quotesList != null && quotesList.Count > 0)
             {

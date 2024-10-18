@@ -24,7 +24,6 @@ namespace VisualShow_Admin.Controller
                     var content = await response.Content.ReadAsStringAsync();
                     if (content.Contains("error"))
                     {
-                        MessageBox.Show("Error: " + content);
                         return null;
                     }
                     List<Son> son = JsonConvert.DeserializeObject<List<Son>>(content);
@@ -45,16 +44,13 @@ namespace VisualShow_Admin.Controller
                 HttpClient client = new HttpClient();
                 string formattedDate = date.ToString("yyyy-MM-dd HH:mm:ss");
                 string json = JsonConvert.SerializeObject(new { son = son, date = formattedDate });
-                MessageBox.Show(json);
                 StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
-                MessageBox.Show(content.ToString());
                 HttpResponseMessage response = await client.PostAsync("https://drey.alwaysdata.net/AddSon/" + id, content).ConfigureAwait(false);
                 if (response.IsSuccessStatusCode)
                 {
                     var result = await response.Content.ReadAsStringAsync();
                     if (result.Contains("error"))
                     {
-                        MessageBox.Show("Error: " + result);
                         return null;
                     }
                     Son sons = JsonConvert.DeserializeObject<Son>(result);
@@ -81,7 +77,6 @@ namespace VisualShow_Admin.Controller
                     var result = await response.Content.ReadAsStringAsync();
                     if (result.Contains("error"))
                     {
-                        MessageBox.Show("Error: " + result);
                         return null;
                     }
                     Son sons = JsonConvert.DeserializeObject<Son>(result);

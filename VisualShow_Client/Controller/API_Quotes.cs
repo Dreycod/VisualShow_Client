@@ -40,24 +40,16 @@ namespace VisualShow_Client.Controller
                         // Check if the response content contains an error message
                         if (content.Contains("error"))
                         {
-                            MessageBox.Show("Error: " + content);
                             return null;
                         }
 
                         // Deserialize the JSON response into a list of QuotesRoot objects
                         List<QuotesRoot> quotes = JsonConvert.DeserializeObject<List<QuotesRoot>>(content);
 
-                        // Display the quote from the first entry (if exists)
-                        if (quotes.Count > 0)
-                        {
-                            MessageBox.Show(quotes[0].quote); // Show the first quote
-                        }
-
                         return quotes; // Return the list of quotes
                     }
                     else
                     {
-                        MessageBox.Show($"Error: {response.StatusCode}");
                         return null;
                     }
                 }

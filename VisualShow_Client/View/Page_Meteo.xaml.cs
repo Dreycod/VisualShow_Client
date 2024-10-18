@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
+using VisualShow_Admin.Controller;
 using VisualShow_Client.Controller;
 using WeatherView.Service;
 
@@ -15,6 +16,7 @@ namespace VisualShow_Client.View
     /// </summary>
     public partial class Page_Meteo : UserControl
     {
+        string ecranName = "";
        public string emergencyMQTTMessage = "";
 
         //variables dans lesquelles ont stocker les valeurs obtenues avec mqtt
@@ -23,10 +25,25 @@ namespace VisualShow_Client.View
         private bool isPopupCooldownActive;
         int seconds = 0;
 
-        public Page_Meteo()
+        DAO_TempHum dao_temphum;
+        DAO_Son dao_son;
+        DAO_Air dao_air;
+        DAO_Ecrans dao_ecrans;
+
+        string air;
+        string humidity;
+        string temperature;
+        string decibels;
+
+        public Page_Meteo(string ecran_name)
         {
             InitializeComponent();
+            ecranName = ecran_name;
             dao_mqtt = new DAO_MQTT();
+            dao_air = new DAO_Air();
+            dao_temphum = new DAO_TempHum();
+            dao_son = new DAO_Son();
+            dao_ecrans = new DAO_Ecrans();
             timer = new DispatcherTimer();
             Initialize_Timer();
             InitializeMQTT();
@@ -47,15 +64,24 @@ namespace VisualShow_Client.View
             timer.Start();
         }
 
-        public void Timer_Tick(object sender, EventArgs e)
+        public async void Timer_Tick(object sender, EventArgs e)
         {
-            
+            ;
             UpdateUI();
             seconds++;
             if (seconds == 30)
             {
-                seconds = 0;
                 emergencyMQTTMessage = "";
+            }
+            if (seconds == 60) {
+                seconds = 0;
+                var ecran = await dao_ecrans.GetEcranByName(ecranName);
+                string idEcran = ecran[0].idecran.ToString();
+                dao_air.AddAir(idEcran, air, DateTime.Now);
+                dao_temphum.AddTemp_Hum(idEcran, temperature, humidity, DateTime.Now);
+                dao_son.AddSon(idEcran, decibels, DateTime.Now);
+
+                
             }
         }
 
@@ -73,11 +99,18 @@ namespace VisualShow_Client.View
             TB_TemperatureValue.Text = mqttData[1] + "°C";
             TB_DecibelsValue.Text = mqttData[2] + " dB";
 
+            humidity = mqttData[0];
+            temperature = mqttData[1];
+            decibels = mqttData[2];
+            air = mqttData[3];
+
             string airQualityValueStr = mqttData[3];
             if (mqttData[4] != "")
             {
                 emergencyMQTTMessage = mqttData[4];
             }
+
+
 
             TB_AirQualityValue.Text = airQualityValueStr + JudgeAirQuality(airQualityValueStr);
             CheckAirQuality(airQualityValueStr);

@@ -31,7 +31,7 @@ namespace VisualShow_Client.View
         public void Initialize_Timer()
         {
             timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromSeconds(60);
+            timer.Interval = TimeSpan.FromSeconds(30);
             timer.Tick += Timer_Tick;
             timer.Start();
         }

@@ -93,7 +93,7 @@
 
                     <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center">
                         <Image Source="..\Ressources\Images\DecibelsIcon.png" Width="125" Height="125" VerticalAlignment="Center" Margin="0,0,10,0"/>
-                        <TextBlock x:Name="TB_Decibels" Text="Humidity:" FontSize="60" FontWeight="Bold" Foreground="Black" VerticalAlignment="Center"/>
+                        <TextBlock x:Name="TB_Decibels" Text="Decibels:" FontSize="60" FontWeight="Bold" Foreground="Black" VerticalAlignment="Center"/>
                     </StackPanel>
 
                     <TextBlock Grid.Row="1" x:Name="TB_DecibelsValue" Text="50 dB" FontSize="130" FontWeight="Bold" Foreground="Black" HorizontalAlignment="Center" Margin="0,10,0,0"/>

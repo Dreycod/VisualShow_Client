@@ -25,7 +25,6 @@ namespace VisualShow_Admin.Controller
                     var content = await response.Content.ReadAsStringAsync();
                     if (content.Contains("error"))
                     {
-                        MessageBox.Show("Error: " + content);
                         return null;
                     }
                     List<Etages> etages = JsonConvert.DeserializeObject<List<Etages>>(content);
@@ -50,7 +49,6 @@ namespace VisualShow_Admin.Controller
                     var content = await response.Content.ReadAsStringAsync();
                     if (content.Contains("error"))
                     {
-                        MessageBox.Show("Error: " + content);
                         return null;
                     }
                     Etages etage = JsonConvert.DeserializeObject<Etages>(content);
@@ -75,7 +73,6 @@ namespace VisualShow_Admin.Controller
                     var content = await response.Content.ReadAsStringAsync();
                     if (content.Contains("error"))
                     {
-                        MessageBox.Show("Error: " + content);
                         return null;
                     }
                     Etages etage = JsonConvert.DeserializeObject<Etages>(content);
@@ -95,16 +92,13 @@ namespace VisualShow_Admin.Controller
             {
                 HttpClient client = new HttpClient();
                 string json = JsonConvert.SerializeObject(new { name = name });
-                MessageBox.Show(json);
                 StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
-                MessageBox.Show(content.ToString());
                 HttpResponseMessage response = await client.PostAsync("https://drey.alwaysdata.net/AddEtage", content).ConfigureAwait(false);
                 if (response.IsSuccessStatusCode)
                 {
                     var result = await response.Content.ReadAsStringAsync();
                     if (result.Contains("error"))
                     {
-                        MessageBox.Show("Error: " + result);
                         return null;
                     }
                     Etages etage = JsonConvert.DeserializeObject<Etages>(result);
@@ -130,7 +124,6 @@ namespace VisualShow_Admin.Controller
                     var result = await response.Content.ReadAsStringAsync();
                     if (result.Contains("error"))
                     {
-                        MessageBox.Show("Error: " + result);
                         return null;
                     }
                     Etages etage = JsonConvert.DeserializeObject<Etages>(result);
@@ -155,7 +148,6 @@ namespace VisualShow_Admin.Controller
                     var content = await response.Content.ReadAsStringAsync();
                     if (content.Contains("error"))
                     {
-                        MessageBox.Show("Error: " + content);
                         return null;
                     }
                     Etages etage = JsonConvert.DeserializeObject<Etages>(content);
