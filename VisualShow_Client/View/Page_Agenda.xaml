@@ -21,6 +21,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
+        
         <Grid Grid.Row="0" Background="LightGray" Margin="20">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -47,6 +48,11 @@
             <Border Name="Media_Border" Grid.Column="4" Style="{StaticResource Menu_Bar}"/>
         </Grid>
 
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
         <Calendar Grid.Row="1" x:Name="DateCalendar" CalendarItemStyle="{DynamicResource CalendarCalendarItemStyle1}" CalendarDayButtonStyle="{DynamicResource CalendarCalendarDayButtonStyle1}" Style="{DynamicResource CalendarStyle1}"/>
 
 
@@ -108,6 +114,8 @@
                     </ListView.ItemTemplate>
                 </ListView>
             </Border>
+        </Grid>
+        
         </Grid>
     </Grid>
     
