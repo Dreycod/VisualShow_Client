@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using VisualShow_Client.View;
 
 namespace VisualShow_Client.Controller
 {
@@ -136,6 +137,26 @@ namespace VisualShow_Client.Controller
             //{
             //    MessageBox.Show("Erreur lors de la réception des messages");
             //}
+        }
+
+        //gère les urgences et affiche la fenetre d'urgence correspondante
+        public void GestionUrgence(string payload)
+        {
+            var valeursUrgentes = new List<string>
+            {
+                "FireAlert",
+                "IntruderAlert",
+                "GeneralEmergency"
+            };
+            string typeAlerte = payload;
+
+            if (valeursUrgentes.Contains(payload))
+            {
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    var affichageUrgence = new Page_Urgence(typeAlerte);
+                });
+            }
         }
         
     }
