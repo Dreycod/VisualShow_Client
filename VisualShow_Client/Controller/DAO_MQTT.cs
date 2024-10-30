@@ -108,9 +108,9 @@ namespace VisualShow_Client.Controller
                 case "KM103/emergency":
                     emergency = payload;
                     MessageBox.Show(emergency, "Message de l'administrateur", MessageBoxButton.OK);
+                    GestionUrgence(payload);
                     break;
             }
-            MessageBox.Show($"Humidité : {humidity}\nTempérature : {temperature}\nDécibels : {decibels}\nQualité :{air_quality}, Emergency: {emergency}");
             return Task.CompletedTask;
         }
 
@@ -124,19 +124,6 @@ namespace VisualShow_Client.Controller
             MqttData.Add(emergency);
 
             return MqttData;
-        }
-        public async Task InitializeAsync()
-        {
-            //await ConnexionBroker();
-            //try
-            //{
-            //    // fonction qui appelle la fonction GestionMessage a chaque fois qu'un message est reçu
-            //    clientmqtt.ApplicationMessageReceivedAsync += GestionMessage;
-            //}
-            //catch (Exception)
-            //{
-            //    MessageBox.Show("Erreur lors de la réception des messages");
-            //}
         }
 
         //gère les urgences et affiche la fenetre d'urgence correspondante
