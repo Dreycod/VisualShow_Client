@@ -43,9 +43,9 @@ namespace VisualShow_Client.Controller
             List<string> topicsVoullus = new List<string>()
             {
                 ecran_name + "/humidity",
-                ecran_name + "temperature",
-                ecran_name + "decibels",
-                ecran_name + "air_quality",
+                ecran_name + "/temperature",
+                ecran_name + "/decibels",
+                ecran_name + "/air_quality",
                 ecran_name + "/emergency"
             };
             foreach (var topic in topicsVoullus)
@@ -82,6 +82,7 @@ namespace VisualShow_Client.Controller
             {
                 case "KM103/humidity":
                     humidity = payload;
+
                     break;
                 case "KM103/temperature":
                     temperature = payload;
@@ -94,6 +95,8 @@ namespace VisualShow_Client.Controller
                     break;
                 case "KM103/emergency":
                     emergency = payload;
+                    MessageBox.Show(emergency, "Message de l'administrateur", MessageBoxButton.OK);
+
                     break;
             }
             return Task.CompletedTask;

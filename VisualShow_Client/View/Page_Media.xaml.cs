@@ -75,7 +75,6 @@ namespace VisualShow_Client.View
             }
         }
 
-        // Download an image from FTP
         private BitmapImage DownloadImage(string ftpUrl, string username, string password)
         {
             try

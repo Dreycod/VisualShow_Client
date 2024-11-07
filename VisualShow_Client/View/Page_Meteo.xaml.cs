@@ -45,8 +45,8 @@ namespace VisualShow_Client.View
             dao_son = new DAO_Son();
             dao_ecrans = new DAO_Ecrans();
             timer = new DispatcherTimer();
-            Initialize_Timer();
             InitializeMQTT();
+            Initialize_Timer();
             UpdateUI();
             
         }
@@ -66,7 +66,7 @@ namespace VisualShow_Client.View
 
         public async void Timer_Tick(object sender, EventArgs e)
         {
-            ;
+            
             UpdateUI();
             seconds++;
             if (seconds == 30)
