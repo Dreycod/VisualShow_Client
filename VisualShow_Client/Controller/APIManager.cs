@@ -826,8 +826,6 @@ namespace WeatherView.Service
     }
     public class APIManager
     {
-        Root root;
-
         public APIManager()
         { }
 

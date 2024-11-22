@@ -29,15 +29,11 @@ namespace VisualShow_Client
         Page_Dates page_dates;
         Page_Media page_media;
         DAO_Ecrans daoEcrans;
+
         public MainWindow()
         {
             InitializeComponent();
-            page_accueil = new Page_Accueil();
-            page_meteo = new Page_Meteo();
-            page_offres = new Page_Offres();
-            page_agenda = new Page_Agenda();
-            page_dates = new Page_Dates();
-            page_media = new Page_Media();
+            
             daoEcrans = new DAO_Ecrans();
 
             LoadEcran();
@@ -106,12 +102,18 @@ namespace VisualShow_Client
 
         private void ComboBoxPages_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
             ComboBoxPages.Visibility = Visibility.Hidden;
             int mainPage = 5000; // 30000
-            int normalPage = 2000; // 20000
-            MethodAsync(normalPage, mainPage);
+            int normalPage = 5000; // 20000
 
+            page_accueil = new Page_Accueil();
+            page_offres = new Page_Offres();
+            page_agenda = new Page_Agenda();
+            page_dates = new Page_Dates();
+            page_meteo = new Page_Meteo(ComboBoxPages.SelectedItem.ToString());
+            page_media = new Page_Media(ComboBoxPages.SelectedItem.ToString());
+
+            MethodAsync(normalPage, mainPage);
         }
     }
 }

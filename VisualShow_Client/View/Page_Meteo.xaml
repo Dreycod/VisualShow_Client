@@ -5,12 +5,12 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:VisualShow_Client.View"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="1080" d:DesignWidth="1920"
       Background="White">
 
     <Grid Background="#FF272727">
         <Grid.RowDefinitions>
-            <RowDefinition Height="0.3*"/>
+            <RowDefinition Height="0.2*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
@@ -37,9 +37,8 @@
 
         <Grid Grid.Row="1" Margin="20,0,20,20" Name="Grid_Content">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="3*"/>
-                <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
             <Grid.RowDefinitions>
@@ -63,23 +62,23 @@
                     </Grid.RowDefinitions>
 
                     <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center">
-                        <Image Source="..\Ressources\Images\HumidityIcon.png" Width="40" Height="40" VerticalAlignment="Center" Margin="0,0,10,0"/>
-                        <TextBlock x:Name="TB_Humidity" Text="Humidity:" FontSize="20" FontWeight="Bold" Foreground="Black" VerticalAlignment="Center"/>
+                        <Image Source="..\Ressources\Images\HumidityIcon.png" Width="125" Height="125" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                        <TextBlock x:Name="TB_Humidity" Text="Humidity:" FontSize="60" FontWeight="Bold" Foreground="Black" VerticalAlignment="Center"/>
                     </StackPanel>
 
-                    <TextBlock Grid.Row="1" x:Name="TB_HumidityValue" Text="50%" FontSize="48" FontWeight="Bold" Foreground="Black" HorizontalAlignment="Center" Margin="0,10,0,0"/>
+                    <TextBlock Grid.Row="1" x:Name="TB_HumidityValue" Text="50%" FontSize="130" FontWeight="Bold" Foreground="Black" HorizontalAlignment="Center" Margin="0,10,0,0"/>
 
                     <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">
-                        <Image Source="..\Ressources\Images\TemperatureIcon.png" Width="40" Height="40" VerticalAlignment="Center" Margin="0,0,10,0"/>
-                        <TextBlock x:Name="TB_Temperature" Text="Temperature:" FontSize="20" FontWeight="Bold" Foreground="Black" VerticalAlignment="Center"/>
+                        <Image Source="..\Ressources\Images\TemperatureIcon.png" Width="125" Height="125" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                        <TextBlock x:Name="TB_Temperature" Text="Temperature:" FontSize="60" FontWeight="Bold" Foreground="Black" VerticalAlignment="Center"/>
                     </StackPanel>
 
-                    <TextBlock Grid.Row="3" x:Name="TB_TemperatureValue" Text="25°C" FontSize="48" FontWeight="Bold" Foreground="Black" HorizontalAlignment="Center" Margin="0,10,0,0"/>
+                    <TextBlock Grid.Row="3" x:Name="TB_TemperatureValue" Text="25°C" FontSize="125" FontWeight="Bold" Foreground="Black" HorizontalAlignment="Center" Margin="0,10,0,0"/>
                 </Grid>
             </Border>
 
-            <!-- Decibels Section -->
-            <Border Grid.Column="1" Grid.Row="1" Background="#F0F0F0" Padding="10" Margin="10,0,10,0">
+            <!-- Humidity and Temperature Section -->
+            <Border Grid.Column="1" Grid.RowSpan="3" Background="#F0F0F0" Padding="10" Margin="0,10,10,10">
                 <Border.Effect>
                     <DropShadowEffect Color="Gray" ShadowDepth="5" BlurRadius="10" Direction="315"/>
                 </Border.Effect>
@@ -87,38 +86,24 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-
-                    <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center">
-                        <Image Source="..\Ressources\Images\DecibelsIcon.png" Width="40" Height="40" VerticalAlignment="Center" Margin="0,0,10,0"/>
-                        <TextBlock x:Name="TB_Decibels" Text="Decibels:" FontSize="20" FontWeight="Bold" Foreground="Black" VerticalAlignment="Center"/>
-                    </StackPanel>
-
-                    <Viewbox Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" MaxWidth="300" MaxHeight="50">
-                        <TextBlock x:Name="TB_DecibelsValue" Text="65 dB" FontSize="40" FontWeight="Bold" Foreground="Black" HorizontalAlignment="Center" Margin="0,10,0,0"/>
-                    </Viewbox>
-                </Grid>
-            </Border>
-
-            <!-- Air Quality Section -->
-            <Border Grid.Column="2" Grid.Row="1" Background="#F0F0F0" Padding="10" Margin="10,0,0,0">
-                <Border.Effect>
-                    <DropShadowEffect Color="Gray" ShadowDepth="5" BlurRadius="10" Direction="315"/>
-                </Border.Effect>
-                <Grid VerticalAlignment="Center">
-                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
                     <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center">
-                        <Image Source="..\Ressources\Images\AirQualityIcon.png" Width="40" Height="40" VerticalAlignment="Center" Margin="0,0,10,0"/>
-                        <TextBlock x:Name="TB_AirQuality" Text="Air Quality:" FontSize="20" FontWeight="Bold" Foreground="Black" VerticalAlignment="Center"/>
+                        <Image Source="..\Ressources\Images\DecibelsIcon.png" Width="125" Height="125" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                        <TextBlock x:Name="TB_Decibels" Text="Decibels:" FontSize="60" FontWeight="Bold" Foreground="Black" VerticalAlignment="Center"/>
                     </StackPanel>
 
-                    <Viewbox Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" MaxWidth="300" MaxHeight="50">
-                        <TextBlock x:Name="TB_AirQualityValue" Text="45 (Very Good)" FontWeight="Bold" Foreground="Black" TextAlignment="Center"/>
-                    </Viewbox>
+                    <TextBlock Grid.Row="1" x:Name="TB_DecibelsValue" Text="50 dB" FontSize="130" FontWeight="Bold" Foreground="Black" HorizontalAlignment="Center" Margin="0,10,0,0"/>
+
+                    <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">
+                        <Image Source="..\Ressources\Images\AirQualityIcon.png" Width="125" Height="125" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                        <TextBlock x:Name="TB_AirQualityIcon" Text="Air Quality:" FontSize="60" FontWeight="Bold" Foreground="Black" VerticalAlignment="Center"/>
+                    </StackPanel>
+
+                    <TextBlock Grid.Row="3" x:Name="TB_AirQualityValue" Text="25 (Very Good)" FontSize="70" FontWeight="Bold" Foreground="Black" HorizontalAlignment="Center" Margin="0,10,0,0"/>
                 </Grid>
             </Border>
 

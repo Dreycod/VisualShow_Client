@@ -23,7 +23,6 @@ namespace VisualShow_Admin.Controller
                     var content = await response.Content.ReadAsStringAsync();
                     if (content.Contains("error"))
                     {
-                        MessageBox.Show("Error: " + content);
                         return null;
                     }
                     List<Events> events = JsonConvert.DeserializeObject<List<Events>>(content);
@@ -48,7 +47,6 @@ namespace VisualShow_Admin.Controller
                     var content = await response.Content.ReadAsStringAsync();
                     if (content.Contains("error"))
                     {
-                        MessageBox.Show("Error: " + content);
                         return null;
                     }
                     Events events = JsonConvert.DeserializeObject<Events>(content);
@@ -72,7 +70,6 @@ namespace VisualShow_Admin.Controller
                     var content = await response.Content.ReadAsStringAsync();
                     if (content.Contains("error"))
                     {
-                        MessageBox.Show("Error: " + content);
                         return null;
                     }
                     Events events = JsonConvert.DeserializeObject<Events>(content);
@@ -93,16 +90,13 @@ namespace VisualShow_Admin.Controller
                 HttpClient client = new HttpClient();
                 string formattedDate = date.ToString("yyyy-MM-dd HH:mm:ss");
                 string json = JsonConvert.SerializeObject(new { name = name, date = formattedDate });
-                MessageBox.Show(json);
                 StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
-                MessageBox.Show(content.ToString());
                 HttpResponseMessage response = await client.PostAsync("https://drey.alwaysdata.net/AddEvent", content).ConfigureAwait(false);
                 if (response.IsSuccessStatusCode)
                 {
                     var result = await response.Content.ReadAsStringAsync();
                     if (result.Contains("error"))
                     {
-                        MessageBox.Show("Error: " + result);
                         return null;
                     }
                     Events events = JsonConvert.DeserializeObject<Events>(result);
@@ -129,7 +123,6 @@ namespace VisualShow_Admin.Controller
                     var result = await response.Content.ReadAsStringAsync();
                     if (result.Contains("error"))
                     {
-                        MessageBox.Show("Error: " + result);
                         return null;
                     }
                     Events events = JsonConvert.DeserializeObject<Events>(result);
@@ -154,7 +147,6 @@ namespace VisualShow_Admin.Controller
                     var content = await response.Content.ReadAsStringAsync();
                     if (content.Contains("error"))
                     {
-                        MessageBox.Show("Error: " + content);
                         return null;
                     }
                     Events events = JsonConvert.DeserializeObject<Events>(content);

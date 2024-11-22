@@ -13,7 +13,7 @@ namespace VisualShow_Client.Controller
 {
     public class DAO_MQTT
     {
-        string BrokerAddress = "172.31.254.61";
+        string BrokerAddress = "raspberrypimatheo1";
         int BrokerPort = 1883;
         string Username = "matheo";
         string Password = "matheo";
@@ -27,7 +27,8 @@ namespace VisualShow_Client.Controller
         string emergency = "";
         List<string> MqttData = new List<string>();
 
-        async Task ConnexionBroker()
+
+        async Task ConnexionBroker(string ecran_name)
         {
             var mqttnet = new MqttFactory();
             clientmqtt = mqttnet.CreateMqttClient();
@@ -42,11 +43,11 @@ namespace VisualShow_Client.Controller
             var listeAbonnementsTopics = new List<MqttTopicFilter>();
             List<string> topicsVoullus = new List<string>()
             {
-                "KM103/humidity",
-                "KM103/temperature",
-                "KM103/decibels",
-                "KM103/air_quality",
-                "KM103/emergency"
+                ecran_name + "/humidity",
+                ecran_name + "/temperature",
+                ecran_name + "/decibels",
+                ecran_name + "/air_quality",
+                ecran_name + "/emergency"
             };
             foreach (var topic in topicsVoullus)
             {
@@ -57,7 +58,7 @@ namespace VisualShow_Client.Controller
             try
             {
                 await clientmqtt.ConnectAsync(parametres_mqtt);
-                MessageBox.Show("Connecté au broker", "Connexion", MessageBoxButton.OK);
+                Console.WriteLine("Connecté au broker", "Connexion");
 
                 var optionsAbonnement = new MqttClientSubscribeOptions()
                 {
@@ -65,11 +66,11 @@ namespace VisualShow_Client.Controller
                 };
 
                 await clientmqtt.SubscribeAsync(optionsAbonnement);
-                MessageBox.Show("Abonnée aux topics", "Connexion", MessageBoxButton.OK);
+                Console.WriteLine("Abonnée aux topics", "Connexion");
             }
             catch (Exception)
             {
-                MessageBox.Show($"Echec de la configuration de la connexion");
+                Console.WriteLine($"Echec de la configuration de la connexion");
             }
         }
 
@@ -91,24 +92,23 @@ namespace VisualShow_Client.Controller
             {
                 case "KM103/humidity":
                     humidity = payload;
-                    MqttData.Add(humidity);
+
                     break;
                 case "KM103/temperature":
                     temperature = payload;
-                    MqttData.Add(temperature);
                     break;
                 case "KM103/decibels":
                     decibels = payload;
-                    MqttData.Add(decibels);
                     break;
                 case "KM103/air_quality":
                     air_quality = payload;
-                    MqttData.Add(air_quality);
                     break;
                 case "KM103/emergency":
                     emergency = payload;
                     MessageBox.Show(emergency, "Message de l'administrateur", MessageBoxButton.OK);
+
                     GestionUrgence(payload);
+
                     break;
             }
             return Task.CompletedTask;
@@ -116,7 +116,8 @@ namespace VisualShow_Client.Controller
 
         public List<string> GetData()
         {
-            // ceci sert à tester avec des données donnée tout en haut manuellement.
+            MqttData.Clear();
+
             MqttData.Add(humidity);
             MqttData.Add(temperature);
             MqttData.Add(decibels);
@@ -143,6 +144,19 @@ namespace VisualShow_Client.Controller
                 {
                     var affichageUrgence = new Page_Urgence(typeAlerte);
                 });
+
+        public async Task InitializeAsync(string ecran_name)
+        {
+            await ConnexionBroker(ecran_name);
+            try
+            {
+                // fonction qui appelle la fonction GestionMessage a chaque fois qu'un message est reçu
+                clientmqtt.ApplicationMessageReceivedAsync += GestionMessage;
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Erreur lors de la réception des messages");
+
             }
         }
         

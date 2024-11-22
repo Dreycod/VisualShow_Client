@@ -24,7 +24,6 @@ namespace VisualShow_Admin.Controller
                     var content = await response.Content.ReadAsStringAsync();
                     if (content.Contains("error"))
                     {
-                        MessageBox.Show("Error: " + content);
                         return null;
                     }
                     List<Temp_Hum> temp_hum = JsonConvert.DeserializeObject<List<Temp_Hum>>(content);
@@ -44,16 +43,14 @@ namespace VisualShow_Admin.Controller
             {
                 HttpClient client = new HttpClient();
                 string formattedDate = date.ToString("yyyy-MM-dd HH:mm:ss");
-                string json = JsonConvert.SerializeObject(new { temperature = temperature, humidite = humidite, date = formattedDate }); MessageBox.Show(json);
+                string json = JsonConvert.SerializeObject(new { temperature = temperature, humidite = humidite, date = formattedDate });
                 StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
-                MessageBox.Show(content.ToString());
                 HttpResponseMessage response = await client.PostAsync("https://drey.alwaysdata.net/AddTemp_Hum/" + id, content).ConfigureAwait(false);
                 if (response.IsSuccessStatusCode)
                 {
                     var result = await response.Content.ReadAsStringAsync();
                     if (result.Contains("error"))
                     {
-                        MessageBox.Show("Error: " + result);
                         return null;
                     }
                     Temp_Hum temp_hum = JsonConvert.DeserializeObject<Temp_Hum>(result);
@@ -80,7 +77,6 @@ namespace VisualShow_Admin.Controller
                     var result = await response.Content.ReadAsStringAsync();
                     if (result.Contains("error"))
                     {
-                        MessageBox.Show("Error: " + result);
                         return null;
                     }
                     Temp_Hum temp_hum = JsonConvert.DeserializeObject<Temp_Hum>(result);

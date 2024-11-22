@@ -4,17 +4,17 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:VisualShow_Client.View"
-      mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      mc:Ignorable="d"
+      d:DesignHeight="1080" d:DesignWidth="1920"
       Background="White">
 
     <UserControl.Resources>
         <DropShadowEffect x:Key="ShadowEffect" BlurRadius="3" ShadowDepth="1" Color="#FF000000"/>
     </UserControl.Resources>
 
-    <Grid Background="#FF272727" >
+    <Grid Background="#FF272727">
         <Grid.RowDefinitions>
-            <RowDefinition Height="0.3*"/>
+            <RowDefinition Height="0.2*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
@@ -39,6 +39,7 @@
             <Border Name="Media_Border" Grid.Column="4" Style="{StaticResource Menu_Bar}"/>
         </Grid>
 
+        <!-- Content area with scrollable list -->
         <Grid Grid.Row="1" Margin="20,0,20,20" Name="Grid_Content">
             <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
                 <ListBox x:Name="LB_Agenda" Background="Transparent" BorderBrush="Transparent">
@@ -49,11 +50,21 @@
                     </ListBox.ItemsPanel>
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <Border BorderBrush="White" BorderThickness="1" CornerRadius="8" Margin="5" 
-                            Effect="{StaticResource ShadowEffect}" Background="Transparent">
-                                <StackPanel>
-                                    <Label Content="{Binding name}" FontSize="16" FontWeight="Bold" HorizontalAlignment="Stretch" Margin="0,5,0,0" />
-                                    <Label Content="{Binding date}" FontSize="14" HorizontalAlignment="Stretch" Margin="0,5,0,0" />
+                            <!-- Each event displayed in a card-like layout -->
+                            <Border BorderBrush="White" BorderThickness="1" CornerRadius="8" Margin="5"
+                                    Effect="{StaticResource ShadowEffect}" Background="#333333">
+                                <StackPanel Margin="10">
+                                    <!-- Event Name -->
+                                    <TextBlock Text="{Binding name}" FontSize="18" FontWeight="Bold" Foreground="White" 
+                                               HorizontalAlignment="Stretch" Margin="0,5,0,0"/>
+
+                                    <!-- Event Date -->
+                                    <TextBlock Text="{Binding date}" FontSize="16" Foreground="#D1D5DB" 
+                                               HorizontalAlignment="Stretch" Margin="0,5,0,0"/>
+
+                                    <!-- Event Description -->
+                                    <TextBlock Text="{Binding description}" FontSize="14" Foreground="#9CA3AF" 
+                                               TextWrapping="Wrap" Margin="0,5,0,0" HorizontalAlignment="Stretch"/>
                                 </StackPanel>
                             </Border>
                         </DataTemplate>
@@ -61,7 +72,5 @@
                 </ListBox>
             </ScrollViewer>
         </Grid>
-
-
     </Grid>
 </UserControl>
