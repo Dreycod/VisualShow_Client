@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using VisualShow_Client.View;
 
 namespace VisualShow_Client.Controller
 {
@@ -78,6 +79,15 @@ namespace VisualShow_Client.Controller
             var topic = e.ApplicationMessage.Topic;
             var payload = Encoding.UTF8.GetString(e.ApplicationMessage.Payload);
 
+            //if (payload == "FireAlert")
+            //{
+                
+            //}
+            //else
+            //{
+            //}
+
+
             switch (topic)
             {
                 case "KM103/humidity":
@@ -97,6 +107,8 @@ namespace VisualShow_Client.Controller
                     emergency = payload;
                     MessageBox.Show(emergency, "Message de l'administrateur", MessageBoxButton.OK);
 
+                    GestionUrgence(payload);
+
                     break;
             }
             return Task.CompletedTask;
@@ -114,6 +126,25 @@ namespace VisualShow_Client.Controller
 
             return MqttData;
         }
+
+        //gère les urgences et affiche la fenetre d'urgence correspondante
+        public void GestionUrgence(string payload)
+        {
+            var valeursUrgentes = new List<string>
+            {
+                "FireAlert",
+                "IntruderAlert",
+                "GeneralEmergency"
+            };
+            string typeAlerte = payload;
+
+            if (valeursUrgentes.Contains(payload))
+            {
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    var affichageUrgence = new Page_Urgence(typeAlerte);
+                });
+
         public async Task InitializeAsync(string ecran_name)
         {
             await ConnexionBroker(ecran_name);
@@ -125,6 +156,7 @@ namespace VisualShow_Client.Controller
             catch (Exception)
             {
                 Console.WriteLine("Erreur lors de la réception des messages");
+
             }
         }
         
