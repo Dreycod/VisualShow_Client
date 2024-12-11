@@ -144,6 +144,8 @@ namespace VisualShow_Client.Controller
                 {
                     var affichageUrgence = new Page_Urgence(typeAlerte);
                 });
+            }
+        }
 
         public async Task InitializeAsync(string ecran_name)
         {

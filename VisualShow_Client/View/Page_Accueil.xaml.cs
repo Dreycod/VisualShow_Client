@@ -34,7 +34,7 @@ namespace VisualShow_Client.View
 
         public Page_Accueil()
         {
-            InitializeComponent();
+            InitializeComponent(); 
             apimanager = new APIManager();
             api_quotes = new API_Quotes();
             InitializeQuote();
@@ -117,25 +117,23 @@ namespace VisualShow_Client.View
 
             for (int i = 0; i < 6; i++)
             {
-                string hourKey;
                 string displayTime;
 
-                // Calculate the future time by adding i+1 hours to 'now'
                 DateTime futureTime = now.AddHours(i + 1);
                 int currentHour = futureTime.Hour;
+                string hourKey;
 
-                // Format hourKey as 1H00, 2H00, 10H00, etc.
-                if (currentHour < 10)
+                if (futureTime.Hour < 10)
                 {
-                    hourKey = futureTime.ToString("H") + "H00"; // Single digit for hours < 10 (e.g., 1H00, 2H00)
+                    hourKey = futureTime.Hour.ToString() + "H00";
                 }
                 else
                 {
-                    hourKey = futureTime.ToString("HH") + "H00"; // Two digits for hours >= 10 (e.g., 10H00, 22H00)
+                    hourKey = futureTime.Hour.ToString() + "H00";
                 }
 
-                // Format displayTime as 1:00, 10:00, 22:00, etc.
-                displayTime = $"{currentHour}:00"; // No leading zero for hours < 10
+
+                displayTime = $"{currentHour}:00";
 
                 PropertyInfo propInfo = typeof(HourlyData).GetProperty($"_{hourKey}");
 
@@ -143,25 +141,26 @@ namespace VisualShow_Client.View
                 {
                     var hourlyData = propInfo.GetValue(TodayForecast.hourly_data);
 
+
                     if (hourlyData != null)
                     {
+
                         var iconProperty = hourlyData.GetType().GetProperty("ICON");
                         var tmpProperty = hourlyData.GetType().GetProperty("TMP2m");
-
+                        
                         if (iconProperty != null && tmpProperty != null)
                         {
+
                             string iconValue = (string)iconProperty.GetValue(hourlyData);
                             string tmpValue = (string)tmpProperty.GetValue(hourlyData);
 
-                            // Set the text for hour and temperature
-                            hourTexts[i].Text = displayTime; // Display the time in 1:00, 2:00, 10:00, etc.
+                            hourTexts[i].Text = displayTime;
                             string bigIconValue = iconValue.Replace(".png", "-big.png");
 
-                            // Use CultureInfo.InvariantCulture to parse the temperature correctly
                             tempTexts[i].Text = Math.Round(double.Parse(tmpValue, CultureInfo.InvariantCulture)).ToString() + "°C";
 
-                            // Set the weather image source
                             weatherImages[i].Source = new BitmapImage(new Uri(bigIconValue, UriKind.RelativeOrAbsolute));
+
                         }
                     }
                 }
